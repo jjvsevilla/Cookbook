@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as recipeActions from '../../actions/recipeActions';
 import RecipeForm from './RecipeForm';
 import toastr from 'toastr';
-//import materializecss from 'materialize-css';
+import materializecss from 'materialize-css';
 
 export class ManageRecipePage extends React.Component {
   constructor(props, context) {
@@ -19,15 +19,13 @@ export class ManageRecipePage extends React.Component {
     this.updateRecipeState = this.updateRecipeState.bind(this);
     this.saveRecipe = this.saveRecipe.bind(this);
   }
-
 /*
   componentDidMount() {
-    debugger;
-      console.log('exampleComponent mounted');
-       $(document).ready(function() {
-    $('select').material_select();
-  });
-    }
+    console.log('exampleComponent mounted');
+    $(document).ready(function() {
+      $('select').material_select();
+    });
+  }
 */
 
   updateRecipeState(event) {

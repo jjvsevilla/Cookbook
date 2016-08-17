@@ -2,6 +2,7 @@ import React from 'react';
 import TextInput from '../common/TextInput';
 import SelectInput from '../common/SelectInput';
 import MaterializeSelectInput from '../common/MaterializeSelectInput';
+import MaterializeClassSelectInput from '../common/MaterializeClassSelectInput';
 
 const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors}) => {
   return (
@@ -16,7 +17,7 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors}) =
           error={errors.title}/>
       </div>
       <div className="row">
-        <MaterializeSelectInput
+        <MaterializeClassSelectInput
           name="authorId"
           label="Author"
           value={recipe.categoryId}

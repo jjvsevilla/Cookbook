@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import materializecss from 'materialize-css';
+//import materializecss from 'materialize-css';
 
 const MaterializeSelectInput = ({name, label, onChange, defaultOption, value, error, options}) => {
   return (
