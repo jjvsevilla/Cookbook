@@ -3,10 +3,39 @@
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #4d4d4d;
   min-width: 550px;
+  /*
   max-width: 850px;
   margin: 0 auto;
+  */
 }
 
+#app .card .card-image .card-title{
+  /*font-weight: bold;*/
+}
+
+/*
+@media #{$medium-and-up} {
+  .card .card-image img{
+  height: 150px;
+  }
+};
+*/
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer.page-footer {
+  padding-top: 0 !important;
+}
+
+/*
 a.active {
   color: orange;
 }
@@ -14,3 +43,4 @@ a.active {
 nav {
   padding-top: 20px;
 }
+*/
