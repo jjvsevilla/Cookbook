@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as recipeActions from '../../actions/recipeActions';
 import RecipeForm from './RecipeForm';
 import toastr from 'toastr';
-import materializecss from 'materialize-css';
+//import materializecss from 'materialize-css';
 
 export class ManageRecipePage extends React.Component {
   constructor(props, context) {
@@ -19,12 +19,23 @@ export class ManageRecipePage extends React.Component {
     this.updateRecipeState = this.updateRecipeState.bind(this);
     this.saveRecipe = this.saveRecipe.bind(this);
   }
+
 /*
-  componentDidMount() {
-    console.log('exampleComponent mounted');
+  componentWillMount() {
+    console.log('ManageRecipePage componentWillMount');
     $(document).ready(function() {
       $('select').material_select();
     });
+  }
+*/
+
+/*
+  componentDidMount() {
+    console.log('ManageRecipePage componentDidMount');
+    $(document).ready(function() {
+      $("select").material_select();
+    });
+    //materializecss.material_select();
   }
 */
 
@@ -51,7 +62,7 @@ export class ManageRecipePage extends React.Component {
     this.setState({saving: false});
     toastr.success('Recipe saved');
     this.context.router.push('/recipes');
-  }  
+  }
 
   render(){
     //materializecss.material_select();
@@ -62,13 +73,13 @@ export class ManageRecipePage extends React.Component {
         onSave={this.saveRecipe}
         recipe={this.state.recipe}
         errors={this.state.errors}
-        saving={this.state.saving} 
+        saving={this.state.saving}
       />
     );
   }
 }
 
-ManageRecipePage.propTypes = {  
+ManageRecipePage.propTypes = {
   recipe: PropTypes.object.isRequired,
   categories: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
@@ -79,7 +90,6 @@ ManageRecipePage.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
- 
   let recipe = {id: '', recipeName: '', categoryId: '', chef: '', ingredients: [], preparation: '', rating: '', imageUrl: '', publishdate: ''};
 
   const categoriesFormattedForDropdown = state.categories.map(category => {

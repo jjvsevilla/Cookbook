@@ -2,6 +2,11 @@ import React, {PropTypes} from 'react';
 //import materializecss from 'materialize-css';
 
 const MaterializeSelectInput = ({name, label, onChange, defaultOption, value, error, options}) => {
+
+  //debugger;
+  //console.log('MaterializeSelectInput');
+  //console.log('name: ' + name + ' label: ' + label + ' defaultOption: ' + defaultOption + ' value: ' + value);
+
   return (
     <div className="input-field col s12">
       <select

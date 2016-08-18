@@ -25,6 +25,7 @@ export default {
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
+      'window.$': 'jquery',
       "window.jQuery": "jquery",
       "Hammer": "hammerjs/hammer",
       createDayLabel: "jquery",

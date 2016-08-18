@@ -1,6 +1,7 @@
 import React from 'react';
 import TextInput from '../common/TextInput';
 import SelectInput from '../common/SelectInput';
+
 import MaterializeSelectInput from '../common/MaterializeSelectInput';
 import MaterializeClassSelectInput from '../common/MaterializeClassSelectInput';
 
@@ -18,12 +19,12 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors}) =
       </div>
       <div className="row">
         <MaterializeClassSelectInput
-          name="authorId"
-          label="Author"
+          name="categoryId"
+          label="Category"
           value={recipe.categoryId}
           defaultOption="Select Category"
           options={allCategories}
-          onChange={onChange} error={errors.authorId}/>      
+          onChange={onChange} error={errors.categoryId}/>
       </div>
       <div className="row">
         <input
@@ -31,7 +32,7 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors}) =
           disabled={saving}
           value={saving ? 'Saving...' : 'Save'}
           className="btn"
-          onClick={onSave}/>      
+          onClick={onSave}/>
       </div>
     </form>
   );

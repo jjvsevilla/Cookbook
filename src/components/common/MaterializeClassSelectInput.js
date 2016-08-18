@@ -2,9 +2,8 @@ import React from 'react';
 import materializecss from 'materialize-css';
 
 class MaterializeClassSelectInput extends React.Component {
-
   componentDidMount() {
-    console.log('exampleComponent mounted');
+    console.log('MaterializeClassSelectInput componentDidMount');
     $(document).ready(function() {
       $('select').material_select();
     });

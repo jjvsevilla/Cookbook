@@ -60,7 +60,7 @@ export class ManageCoursePage extends React.Component {
         onSave={this.saveCourse}
         course={this.state.course}
         errors={this.state.errors}
-        saving={this.state.saving} 
+        saving={this.state.saving}
       />
     );
   }

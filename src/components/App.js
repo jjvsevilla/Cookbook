@@ -4,7 +4,22 @@ import Header from './common/Header';
 import Footer from './common/Footer';
 import {connect} from 'react-redux';
 
+/*
+import materializecss from 'materialize-css';
+console.log(typeof $ === 'function');
+console.log(typeof materializecss === 'function');
+*/
+
 class App extends React.Component {
+  /*
+  componentDidMount() {
+    $(document).ready(function() {
+      console.log('App componentDidMount');
+      $("select").material_select();
+    });
+  }
+  */
+  
   render() {
     return (
       <div>
@@ -14,7 +29,7 @@ class App extends React.Component {
             {this.props.children}
           </div>
         </main>
-        <Footer />     
+        <Footer />
       </div>
     );
   }
