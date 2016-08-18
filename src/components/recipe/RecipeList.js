@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import RecipeItem from './RecipeItem';
 
-//const CourseList = ({courses, deleteCourse}) => {
 const RecipeList = ({recipes}) => {
   return (
     <div className="row">

@@ -18,6 +18,7 @@ export default (
     <Route path="course/:id" component={ManageCoursePage} />
     <Route path="recipes" component={RecipesPage} />
     <Route path="recipe" component={ManageRecipePage} />    
+    <Route path="recipe/:id" component={ManageRecipePage} />
     <Route path="categories" component={CategoriesPage} />
   </Route>
 );

@@ -2,23 +2,29 @@ import React from 'react';
 import TextInput from '../common/TextInput';
 import SelectInput from '../common/SelectInput';
 
+import MaterializeTextInputWithIcon from '../common/MaterializeTextInputWithIcon';
+import MaterializeTextInput from '../common/MaterializeTextInput';
+import MaterializeTextAreaInput from '../common/MaterializeTextAreaInput';
 import MaterializeSelectInput from '../common/MaterializeSelectInput';
-import MaterializeClassSelectInput from '../common/MaterializeClassSelectInput';
+import BackButton from '../common/BackButton';
+import SaveFormButton from '../common/SaveFormButton';
+import IngredientList from './IngredientList';
 
 const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors}) => {
   return (
     <form className="col s12">
-      <h1>Manage Recipe</h1>
+      <h3>Manage Recipe</h3>
       <div className="row">
-        <TextInput
+        <MaterializeTextInputWithIcon
           name="recipeName"
-          label="recipeName"
+          label="Recipe Name"
           value={recipe.recipeName}
           onChange={onChange}
-          error={errors.title}/>
+          error={errors.title}
+          iconName="assignment"/>
       </div>
       <div className="row">
-        <MaterializeClassSelectInput
+        <MaterializeSelectInput
           name="categoryId"
           label="Category"
           value={recipe.categoryId}
@@ -27,12 +33,32 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors}) =
           onChange={onChange} error={errors.categoryId}/>
       </div>
       <div className="row">
-        <input
-          type="submit"
-          disabled={saving}
-          value={saving ? 'Saving...' : 'Save'}
-          className="btn"
-          onClick={onSave}/>
+        <MaterializeTextInputWithIcon
+          name="chef"
+          label="Chef"
+          value={recipe.chef}
+          onChange={onChange}
+          error={errors.chef}
+          iconName="account_circle"/>
+      </div>
+      <div>
+        <IngredientList 
+          ingredients={recipe.ingredients} 
+          name="ingredients"
+          label="Ingredients" />
+      </div>
+      <div className="row">
+        <MaterializeTextAreaInput
+          name="preparation"
+          label="Preparation"
+          value={recipe.preparation}
+          onChange={onChange}
+          error={errors.preparation}/>
+      </div>
+      <div className="row">
+          <BackButton classes="waves-effect waves-light btn"/>
+          &nbsp;
+          <SaveFormButton onSave={onSave} saving={saving} classes="waves-effect waves-light btn red" /> 
       </div>
     </form>
   );

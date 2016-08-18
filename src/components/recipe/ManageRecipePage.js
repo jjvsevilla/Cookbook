@@ -4,7 +4,6 @@ import {bindActionCreators} from 'redux';
 import * as recipeActions from '../../actions/recipeActions';
 import RecipeForm from './RecipeForm';
 import toastr from 'toastr';
-//import materializecss from 'materialize-css';
 
 export class ManageRecipePage extends React.Component {
   constructor(props, context) {
@@ -19,31 +18,18 @@ export class ManageRecipePage extends React.Component {
     this.updateRecipeState = this.updateRecipeState.bind(this);
     this.saveRecipe = this.saveRecipe.bind(this);
   }
-
-/*
-  componentWillMount() {
-    console.log('ManageRecipePage componentWillMount');
-    $(document).ready(function() {
-      $('select').material_select();
-    });
+  
+  componentWillReceiveProps(nextProps) {
+    if (this.props.recipe.id != nextProps.recipe.id) {    
+      this.setState({recipe: Object.assign({}, nextProps.recipe)});
+    }
   }
-*/
-
-/*
-  componentDidMount() {
-    console.log('ManageRecipePage componentDidMount');
-    $(document).ready(function() {
-      $("select").material_select();
-    });
-    //materializecss.material_select();
-  }
-*/
 
   updateRecipeState(event) {
     const field = event.target.name;
-    let course = this.state.course;
-    course[field] = event.target.value;
-    return this.setState({course: course});
+    let recipe = this.state.recipe;
+    recipe[field] = event.target.value;
+    return this.setState({recipe: recipe});
   }
 
   saveRecipe(event) {
@@ -65,7 +51,6 @@ export class ManageRecipePage extends React.Component {
   }
 
   render(){
-    //materializecss.material_select();
     return (
       <RecipeForm
         allCategories={this.props.categories}
@@ -89,8 +74,20 @@ ManageRecipePage.contextTypes = {
   router: PropTypes.object
 };
 
+function getRecipeById(recipes, id) {
+  const recipe = recipes.filter(recipe => recipe.id == id);
+  if (recipe) return recipe[0]; //since filter returns an array, have to grab the first.
+  return null;
+}
+
 function mapStateToProps(state, ownProps) {
+  const recipeId = ownProps.params.id; // from the path `/recipe/:id`
+
   let recipe = {id: '', recipeName: '', categoryId: '', chef: '', ingredients: [], preparation: '', rating: '', imageUrl: '', publishdate: ''};
+
+  if (recipeId && state.recipes.length > 0) {
+    recipe = getRecipeById(state.recipes, recipeId);
+  }
 
   const categoriesFormattedForDropdown = state.categories.map(category => {
     return {

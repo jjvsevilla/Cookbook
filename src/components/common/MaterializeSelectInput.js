@@ -1,25 +1,20 @@
 import React, {PropTypes} from 'react';
-//import materializecss from 'materialize-css';
 
 const MaterializeSelectInput = ({name, label, onChange, defaultOption, value, error, options}) => {
-
-  //debugger;
-  //console.log('MaterializeSelectInput');
-  //console.log('name: ' + name + ' label: ' + label + ' defaultOption: ' + defaultOption + ' value: ' + value);
-
   return (
     <div className="input-field col s12">
       <select
+        className="browser-default"
         name={name}
         value={value}
         onChange={onChange}>
         <option value="" disabled>{defaultOption}</option>
-        {options.map((option) => {
-          return <option key={option.value} value={option.value}>{option.text}</option>;
+        {options.map((option, index) => {
+          return <option key={index} value={option.value}>{option.text}</option>;
         })
         }
       </select>
-      <label>Materialize Select</label>
+      <label htmlFor={name} className="active">{label}</label>
       {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );

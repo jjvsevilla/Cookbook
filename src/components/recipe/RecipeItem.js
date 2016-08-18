@@ -16,7 +16,9 @@ const RecipeItem = ({recipe}) => {
           <p className="truncate">{recipe.preparation}</p>
         </div>
         <div className="card-action">
-          <a href="#">This is a link</a>
+          <Link to={'/recipe/' + recipe.id}>
+            Edit this recipe
+          </Link>
         </div>
       </div>
 

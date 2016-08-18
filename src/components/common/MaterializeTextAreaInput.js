@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const MaterializeTextInput = ({name, label, onChange, placeholder, value, error}) => {
+const MaterializeTextAreaInput = ({name, label, onChange, placeholder, value, error}) => {
   /*
   let wrapperClass = 'form-group';
   if (error && error.length > 0) {
@@ -9,20 +9,19 @@ const MaterializeTextInput = ({name, label, onChange, placeholder, value, error}
 */
   return (
     <div className="input-field col s12">
-      <input 
-        type="text" 
+      <textarea 
         name={name}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="validate"/>
+        className="materialize-textarea"></textarea>
       <label htmlFor={name} className="active">{label}</label>
       {error && <div className="left-alert ">{error}</div>}
     </div>
   );
 };
 
-MaterializeTextInput.propTypes = {
+MaterializeTextAreaInput.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -31,4 +30,7 @@ MaterializeTextInput.propTypes = {
   error: PropTypes.string
 };
 
-export default MaterializeTextInput;
+export default MaterializeTextAreaInput;
+
+
+

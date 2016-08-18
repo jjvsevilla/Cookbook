@@ -29,7 +29,6 @@ export class ManageCoursePage extends React.Component {
   updateCourseState(event) {
     const field = event.target.name;
     let course = this.state.course;
-    //debugger;
     course[field] = event.target.value;
     return this.setState({course: course});
   }
@@ -39,11 +38,11 @@ export class ManageCoursePage extends React.Component {
     this.setState({saving: true});
 
     this.props.actions.saveCourse(this.state.course)
-       .then(() => this.redirect())
-       .catch(error => {
-          toastr.error(error);
-          this.setState({saving: false});
-        });
+      .then(() => this.redirect())
+      .catch(error => {
+        toastr.error(error);
+        this.setState({saving: false});
+      });
   }
 
   redirect() {
@@ -77,14 +76,12 @@ ManageCoursePage.contextTypes = {
 };
 
 function getCourseById(courses, id) {
-  //debugger;
   const course = courses.filter(course => course.id == id);
   if (course) return course[0]; //since filter returns an array, have to grab the first.
   return null;
 }
 
 function mapStateToProps(state, ownProps) {
-  //debugger;
   const courseId = ownProps.params.id; // from the path `/course/:id`
 
   let course = {id: '', watchHref: '', title: '', authorId: '', length: '', category: ''};
