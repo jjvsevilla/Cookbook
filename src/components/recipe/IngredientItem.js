@@ -1,20 +1,28 @@
 import React, {PropTypes} from 'react';
 
-const IngredientItem = ({ingredient, action}) => {
-  console.log('IngredientItem before render')
-  let style="btn-floating btn-large waves-effect waves-light red";
+const IngredientItem = ({ingredient, action, addIngredient, updateIngredient, removeIngredient}) => {
+  let color="";
+  let style="btn-floating btn-large waves-effect waves-light ";  
+  let isNew=true;
+
+  if(action === "delete"){
+    color="red";
+    isNew=false;
+  }
+  style+=color;
+
   return (
     <li className="collection-item">
       <div className="row"> 
         <div className="input-field col s3">
-          <input type="text" value={ingredient.amount} />
+          {!isNew && <input type="text" name="amount" value={ingredient.amount} onChange={updateIngredient} />}
         </div>   
-        <div className="input-field col s6">
-          <input type="text" value={ingredient.name} />
+        <div className="input-field col s8">
+          {!isNew && <input type="text" name="name" value={ingredient.name} onChange={updateIngredient} /> }
         </div>  
-        <div className="input-field col s3">
-          {}
-          <a className="btn-floating btn-large waves-effect waves-light red"><i className="material-icons">{action}</i></a>
+        <div className="input-field col s1">
+          {isNew && <a className={style} onClick={addIngredient}><i className="material-icons">{action}</i></a>}
+          {!isNew && <a className={style} onClick={removeIngredient}><i className="material-icons">{action}</i></a>}    
         </div>
       </div>       
     </li>

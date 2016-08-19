@@ -17,6 +17,10 @@ export class ManageRecipePage extends React.Component {
 
     this.updateRecipeState = this.updateRecipeState.bind(this);
     this.saveRecipe = this.saveRecipe.bind(this);
+
+    this.updateIngredient = this.updateIngredient.bind(this);
+    this.addIngredient = this.addIngredient.bind(this);
+    this.removeIngredient = this.removeIngredient.bind(this);
   }
   
   componentWillReceiveProps(nextProps) {
@@ -36,12 +40,45 @@ export class ManageRecipePage extends React.Component {
     event.preventDefault();
     this.setState({saving: true});
 
+    if(this.state.recipe.imageUrl === ""){
+      this.state.recipe.imageUrl = "https://image.freepik.com/free-icon/covered-plate-of-food_318-61406.jpg";
+    }
+
     this.props.actions.saveRecipe(this.state.recipe)
       .then(() => this.redirect())
       .catch(error => {
         toastr.error(error);
         this.setState({saving: false});
       });
+  }
+
+  addIngredient(){
+    let recipe = Object.assign({}, this.state.recipe); 
+    const newIngredient = Object.assign({}, {"name": "", "amount": ""});
+    recipe.ingredients = [...recipe.ingredients,Object.assign({}, newIngredient)];
+    return this.setState({recipe: recipe}); 
+  }
+
+  updateIngredient(index, event){ 
+    const field = event.target.name;
+    let recipe = Object.assign({}, this.state.recipe);     
+    let ingredient = Object.assign({}, recipe.ingredients[index]); 
+    ingredient[field] = event.target.value; 
+
+    recipe.ingredients = recipe.ingredients.map((ingre, idx) => {
+      if (idx === index) {
+        return Object.assign({}, ingredient)
+      }
+      return ingre
+    });
+
+    return this.setState({recipe: recipe});
+  }
+
+  removeIngredient(index){
+    let recipe = Object.assign({}, this.state.recipe); 
+    recipe.ingredients = [...recipe.ingredients.filter((_, i) => i !== index)];
+    return this.setState({recipe: recipe});
   }
 
   redirect() {
@@ -58,7 +95,10 @@ export class ManageRecipePage extends React.Component {
         onSave={this.saveRecipe}
         recipe={this.state.recipe}
         errors={this.state.errors}
-        saving={this.state.saving}
+        saving={this.state.saving}        
+        addIngredient={this.addIngredient}
+        updateIngredient={this.updateIngredient}
+        removeIngredient={this.removeIngredient}
       />
     );
   }

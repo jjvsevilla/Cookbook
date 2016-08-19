@@ -10,7 +10,7 @@ import BackButton from '../common/BackButton';
 import SaveFormButton from '../common/SaveFormButton';
 import IngredientList from './IngredientList';
 
-const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors}) => {
+const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, addIngredient, updateIngredient, removeIngredient}) => {
   return (
     <form className="col s12">
       <h3>Manage Recipe</h3>
@@ -45,7 +45,10 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors}) =
         <IngredientList 
           ingredients={recipe.ingredients} 
           name="ingredients"
-          label="Ingredients" />
+          label="Ingredients" 
+          addIngredient={addIngredient}
+          updateIngredient={updateIngredient}
+          removeIngredient={removeIngredient}/>
       </div>
       <div className="row">
         <MaterializeTextAreaInput

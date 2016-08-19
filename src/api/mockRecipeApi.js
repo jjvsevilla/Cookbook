@@ -328,9 +328,24 @@ class RecipeApi {
       setTimeout(() => {
         // Simulate server-side validation
         const minRecipeNameLength = 1;
+        const emptyOptionLength = 1;
+        const minTextLength = 1;
+        const minArrayLength = 1;
 
-        if (recipe.recipeName.length < minRecipeNameLength) {
-          reject(`Name must be at least ${minRecipeNameLength} characters.`);
+        if (recipe.recipeName.length < minTextLength) {
+          reject(`Recipe Name cannot be empty.`);
+        }
+        if (recipe.categoryId.length < emptyOptionLength) {
+          reject(`Category cannot be empty.`);
+        }
+        if (recipe.chef.length < minTextLength) {
+          reject(`Chef Name cannot be empty.`);
+        }
+        if (recipe.ingredients.length < minArrayLength) {
+          reject(`Ingredients are required. Add at least ${minArrayLength} ingredient.`);
+        }
+        if (recipe.preparation.length < minTextLength) {
+          reject(`Preparation cannot be empty.`);
         }
 
         if (recipe.id) {
