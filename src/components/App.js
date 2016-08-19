@@ -7,12 +7,12 @@ import materializecss from 'materialize-css'
 class App extends React.Component {
   componentDidMount() {
       $('textarea').trigger('autoresize');
-      $('select').material_select();  
+      //$('select').material_select();  
   }
 
   componentDidUpdate(){
       $('textarea').trigger('autoresize');
-      $('select').material_select();
+      //$('select').material_select();
   }
   
   render() {

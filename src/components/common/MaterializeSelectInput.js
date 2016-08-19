@@ -4,7 +4,7 @@ const MaterializeSelectInput = ({name, label, onChange, defaultOption, value, er
   return (
     <div className="input-field col s12">
       <select
-        className="browser-default"
+        
         name={name}
         value={value}
         onChange={onChange}>

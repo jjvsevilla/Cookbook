@@ -23,6 +23,14 @@ export class ManageRecipePage extends React.Component {
     this.removeIngredient = this.removeIngredient.bind(this);
   }
   
+  componentDidMount() {
+      $('select').material_select(this.updateRecipeState);  
+  }
+
+  componentDidUpdate(){
+      $('select').material_select(this.updateRecipeState);  
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.recipe.id != nextProps.recipe.id) {    
       this.setState({recipe: Object.assign({}, nextProps.recipe)});
@@ -30,10 +38,24 @@ export class ManageRecipePage extends React.Component {
   }
 
   updateRecipeState(event) {
-    const field = event.target.name;
+    debugger;
+    let _value = "";
+    let _field = "";
+    if(event){
+        _value = event.target.value;
+        _field = event.target.name;
+    } else {
+      _field = "categoryId";      
+      _value = $("select[name='categoryId']").val();      
+    }
     let recipe = this.state.recipe;
-    recipe[field] = event.target.value;
+    recipe[_field] = _value;
     return this.setState({recipe: recipe});
+
+    // const field = event.target.name;
+    // let recipe = this.state.recipe;
+    // recipe[field] = event.target.value;
+    // return this.setState({recipe: recipe});
   }
 
   saveRecipe(event) {
