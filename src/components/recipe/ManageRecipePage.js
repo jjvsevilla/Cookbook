@@ -54,8 +54,8 @@ export class ManageRecipePage extends React.Component {
 
   addIngredient(){
     let recipe = Object.assign({}, this.state.recipe); 
-    const newIngredient = Object.assign({}, {"name": "", "amount": ""});
-    recipe.ingredients = [...recipe.ingredients,Object.assign({}, newIngredient)];
+    const newIngredient = {"name": "", "amount": ""};
+    recipe.ingredients = [...recipe.ingredients, newIngredient];
     return this.setState({recipe: recipe}); 
   }
 
@@ -67,9 +67,9 @@ export class ManageRecipePage extends React.Component {
 
     recipe.ingredients = recipe.ingredients.map((ingre, idx) => {
       if (idx === index) {
-        return Object.assign({}, ingredient)
+        return Object.assign({}, ingredient);
       }
-      return ingre
+      return ingre;
     });
 
     return this.setState({recipe: recipe});
@@ -77,7 +77,7 @@ export class ManageRecipePage extends React.Component {
 
   removeIngredient(index){
     let recipe = Object.assign({}, this.state.recipe); 
-    recipe.ingredients = [...recipe.ingredients.filter((_, i) => i !== index)];
+    recipe.ingredients = recipe.ingredients.filter((_, i) => i !== index);
     return this.setState({recipe: recipe});
   }
 
