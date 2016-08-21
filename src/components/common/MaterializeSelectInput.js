@@ -1,10 +1,9 @@
 import React, {PropTypes} from 'react';
 
-const MaterializeSelectInput = ({name, label, onChange, defaultOption, value, error, options}) => {
+const MaterializeSelectInput = ({NavId, name, label, onChange, defaultOption, value, error, options}) => {
   return (
-    <div className="input-field col s12">
+    <div className="input-field col s12 scrollspy" id={NavId}>
       <select
-        
         name={name}
         value={value}
         onChange={onChange}>
@@ -14,13 +13,14 @@ const MaterializeSelectInput = ({name, label, onChange, defaultOption, value, er
         })
         }
       </select>
-      <label htmlFor={name} className="active">{label}</label>
+      <label htmlFor={name} className="selectLabelFix active">{label}</label>
       {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );
 };
 
 MaterializeSelectInput.propTypes = {
+  NavId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,

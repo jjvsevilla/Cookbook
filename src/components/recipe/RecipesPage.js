@@ -23,21 +23,21 @@ class RecipesPage extends React.Component {
   render() {
     const {recipes, loading} = this.props;
     return (
-      <div className="row"> 
+      <div className="row">
         <div className="col s12">
 
-          <div className="row valign-wrapper">        
+          <div className="row valign-wrapper">
             <div className="col s6 left-align">
               <h3 className="header">
-                Recipes        
-              </h3> 
-            </div>          
+                Recipes
+              </h3>
+            </div>
             <NumberOfElementsButton loading={this.props.loading} elements={recipes} single={`recipe`} multiple={`recipes`}/>
-          </div>  
-          
+          </div>
+
           <div className="divider"></div>
 
-          <div className="row">            
+          <div className="row">
             <RecipeList recipes={recipes}/>
           </div>
 
@@ -48,7 +48,7 @@ class RecipesPage extends React.Component {
                   <i className="material-icons">add</i>
               </a>
             </div>
-          </div>  
+          </div>
 
         </div>
       </div>

@@ -6,7 +6,7 @@ import open from 'open';
 
 /* eslint-disable no-console */
 
-const port = 3099;
+const port = 3030; // 3099 avantica port
 const app = express();
 const compiler = webpack(config);
 

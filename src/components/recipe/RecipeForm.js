@@ -12,58 +12,77 @@ import IngredientList from './IngredientList';
 
 const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, addIngredient, updateIngredient, removeIngredient}) => {
   return (
-    <form className="col s12">
-      <h3>Manage Recipe</h3>
-      <div className="row">
-        <MaterializeTextInputWithIcon
-          name="recipeName"
-          label="Recipe Name"
-          value={recipe.recipeName}
-          onChange={onChange}
-          error={errors.title}
-          iconName="assignment"/>
+    <div className="row">
+      <form className="col s10">
+        <h3>Manage Recipe</h3>
+        <br />
+        <div className="row">
+          <MaterializeTextInputWithIcon
+            NavId="RecipeName"
+            name="recipeName"
+            label="Recipe Name"
+            value={recipe.recipeName}
+            onChange={onChange}
+            error={errors.title}
+            iconName="assignment"/>
+        </div>
+        <div className="row">
+          <MaterializeSelectInput
+            NavId="Category"
+            name="categoryId"
+            label="Category"
+            value={recipe.categoryId}
+            defaultOption="Select Category"
+            options={allCategories}
+            onChange={onChange} error={errors.categoryId}/>
+        </div>
+        <div className="row">
+          <MaterializeTextInputWithIcon
+            NavId="Chef"
+            name="chef"
+            label="Chef"
+            value={recipe.chef}
+            onChange={onChange}
+            error={errors.chef}
+            iconName="account_circle"/>
+        </div>
+        <div>
+          <IngredientList
+            NavId="Ingredients"
+            ingredients={recipe.ingredients}
+            name="ingredients"
+            label="Ingredients"
+            addIngredient={addIngredient}
+            updateIngredient={updateIngredient}
+            removeIngredient={removeIngredient}/>
+        </div>
+        <div className="row">
+          <MaterializeTextAreaInput
+            NavId="Preparation"
+            name="preparation"
+            label="Preparation"
+            value={recipe.preparation}
+            onChange={onChange}
+            error={errors.preparation}/>
+        </div>
+        <div className="row">
+            <BackButton classes="waves-effect waves-light btn"/>
+            &nbsp;
+            <SaveFormButton onSave={onSave} saving={saving} classes="waves-effect waves-light btn red" />
+        </div>
+      </form>
+      <div className="col s2">
+        <div className="toc-wrapper">
+          <ul className="section table-of-contents">
+            <li><a href="#RecipeName">Recipe Name</a></li>
+            <li><a href="#Category">Category</a></li>
+            <li><a href="#Chef">Chef</a></li>
+            <li><a href="#Ingredients">Ingredients</a></li>
+            <li><a href="#Preparation">Preparation</a></li>
+          </ul>
+        </div>
       </div>
-      <div className="row">
-        <MaterializeSelectInput
-          name="categoryId"
-          label="Category"
-          value={recipe.categoryId}
-          defaultOption="Select Category"
-          options={allCategories}
-          onChange={onChange} error={errors.categoryId}/>
-      </div>
-      <div className="row">
-        <MaterializeTextInputWithIcon
-          name="chef"
-          label="Chef"
-          value={recipe.chef}
-          onChange={onChange}
-          error={errors.chef}
-          iconName="account_circle"/>
-      </div>
-      <div>
-        <IngredientList 
-          ingredients={recipe.ingredients} 
-          name="ingredients"
-          label="Ingredients" 
-          addIngredient={addIngredient}
-          updateIngredient={updateIngredient}
-          removeIngredient={removeIngredient}/>
-      </div>
-      <div className="row">
-        <MaterializeTextAreaInput
-          name="preparation"
-          label="Preparation"
-          value={recipe.preparation}
-          onChange={onChange}
-          error={errors.preparation}/>
-      </div>
-      <div className="row">
-          <BackButton classes="waves-effect waves-light btn"/>
-          &nbsp;
-          <SaveFormButton onSave={onSave} saving={saving} classes="waves-effect waves-light btn red" /> 
-      </div>
-    </form>
+    </div>
   );
 };
 

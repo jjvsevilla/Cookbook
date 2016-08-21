@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const MaterializeTextInputWithIcon = ({name, label, onChange, placeholder, value, error, iconName}) => {
+const MaterializeTextInputWithIcon = ({NavId, name, label, onChange, placeholder, value, error, iconName}) => {
   /*
   let wrapperClass = 'form-group';
   if (error && error.length > 0) {
@@ -8,22 +8,23 @@ const MaterializeTextInputWithIcon = ({name, label, onChange, placeholder, value
   }
 */
   return (
-    <div className="input-field col s12">
+    <div className="input-field col s12 scrollspy" id={NavId}>
       <i className="material-icons prefix">{iconName}</i>
-      <input 
-        type="text" 
+      <input
+        type="text"
         name={name}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
         className="validate"/>
-      <label htmlFor={name} className="active">{label}</label>
+      <label htmlFor={name} className="inputLabelFix active">{label}</label>
       {error && <div className="left-alert">{error}</div>}
     </div>
   );
 };
 
 MaterializeTextInputWithIcon.propTypes = {
+  NavId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,

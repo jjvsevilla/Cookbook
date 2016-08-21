@@ -7,7 +7,7 @@ const SaveFormButton = ({onSave, saving, classes}) => (
     value={saving ? 'Saving...' : 'Save'}
     className={classes}
     onClick={onSave}/>   
-)
+);
 
 SaveFormButton.propTypes = {
   onSave: React.PropTypes.func.isRequired,

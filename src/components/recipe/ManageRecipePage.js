@@ -22,49 +22,49 @@ export class ManageRecipePage extends React.Component {
     this.addIngredient = this.addIngredient.bind(this);
     this.removeIngredient = this.removeIngredient.bind(this);
   }
-  
+
   componentDidMount() {
-      $('select').material_select(this.updateRecipeState);  
+      $('.toc-wrapper').pushpin({ top: 64 });
+      $('.scrollspy').scrollSpy();
+      $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'categoryId', "select[name='categoryId']"));
   }
 
   componentDidUpdate(){
-      $('select').material_select(this.updateRecipeState);  
+      $('.toc-wrapper').pushpin({ top: 64 });
+      $('.scrollspy').scrollSpy();
+      $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'categoryId', "select[name='categoryId']"));
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.recipe.id != nextProps.recipe.id) {    
+    if (this.props.recipe.id != nextProps.recipe.id) {
       this.setState({recipe: Object.assign({}, nextProps.recipe)});
     }
   }
 
-  updateRecipeState(event) {
-    debugger;
+  updateRecipeState(event, field, selector) {
     let _value = "";
     let _field = "";
     if(event){
         _value = event.target.value;
         _field = event.target.name;
     } else {
-      _field = "categoryId";      
-      _value = $("select[name='categoryId']").val();      
+      _field = field;
+      _value = $(selector).val();
     }
     let recipe = this.state.recipe;
     recipe[_field] = _value;
     return this.setState({recipe: recipe});
-
-    // const field = event.target.name;
-    // let recipe = this.state.recipe;
-    // recipe[field] = event.target.value;
-    // return this.setState({recipe: recipe});
   }
 
   saveRecipe(event) {
     event.preventDefault();
     this.setState({saving: true});
 
-    if(this.state.recipe.imageUrl === ""){
-      this.state.recipe.imageUrl = "https://image.freepik.com/free-icon/covered-plate-of-food_318-61406.jpg";
+    let recipe = this.state.recipe;
+    if(recipe.imageUrl === ""){
+      recipe.imageUrl = "https://image.freepik.com/free-icon/covered-plate-of-food_318-61406.jpg";
     }
+    this.setState({recipe: recipe});
 
     this.props.actions.saveRecipe(this.state.recipe)
       .then(() => this.redirect())
@@ -75,17 +75,17 @@ export class ManageRecipePage extends React.Component {
   }
 
   addIngredient(){
-    let recipe = Object.assign({}, this.state.recipe); 
+    let recipe = Object.assign({}, this.state.recipe);
     const newIngredient = {"name": "", "amount": ""};
     recipe.ingredients = [...recipe.ingredients, newIngredient];
-    return this.setState({recipe: recipe}); 
+    return this.setState({recipe: recipe});
   }
 
-  updateIngredient(index, event){ 
+  updateIngredient(index, event){
     const field = event.target.name;
-    let recipe = Object.assign({}, this.state.recipe);     
-    let ingredient = Object.assign({}, recipe.ingredients[index]); 
-    ingredient[field] = event.target.value; 
+    let recipe = Object.assign({}, this.state.recipe);
+    let ingredient = Object.assign({}, recipe.ingredients[index]);
+    ingredient[field] = event.target.value;
 
     recipe.ingredients = recipe.ingredients.map((ingre, idx) => {
       if (idx === index) {
@@ -98,7 +98,7 @@ export class ManageRecipePage extends React.Component {
   }
 
   removeIngredient(index){
-    let recipe = Object.assign({}, this.state.recipe); 
+    let recipe = Object.assign({}, this.state.recipe);
     recipe.ingredients = recipe.ingredients.filter((_, i) => i !== index);
     return this.setState({recipe: recipe});
   }
@@ -117,7 +117,7 @@ export class ManageRecipePage extends React.Component {
         onSave={this.saveRecipe}
         recipe={this.state.recipe}
         errors={this.state.errors}
-        saving={this.state.saving}        
+        saving={this.state.saving}
         addIngredient={this.addIngredient}
         updateIngredient={this.updateIngredient}
         removeIngredient={this.removeIngredient}

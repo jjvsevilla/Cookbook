@@ -6,7 +6,7 @@ const RecipeList = ({recipes}) => {
     <div className="row">
       {recipes.map(recipe =>
         <RecipeItem key={recipe.id} recipe={recipe}/>
-      )}    
+      )}
     </div>
   );
 };

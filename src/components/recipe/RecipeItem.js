@@ -5,25 +5,31 @@ const RecipeItem = ({recipe}) => {
   return (
     <div className="col s12 m6 l4">
 
-      <div className="card hoverable small">
-        <div className="card-image">
+      <div className="card sticky-action">
+
+        <div className="card-image waves-effect waves-block waves-light">
           <img className="responsive-img" src={recipe.imageUrl} title={recipe.recipeName} />
-          <Link to={'/recipe/' + recipe.id}>
-            <span className="card-title">{recipe.recipeName}</span>
-          </Link>
         </div>
+
         <div className="card-content">
+          <span className="card-title activator grey-text text-darken-4 fix">{recipe.recipeName}<i className="material-icons right">more_vert</i></span>
           <p className="truncate">{recipe.preparation}</p>
         </div>
+
         <div className="card-action">
           <Link to={'/recipe/' + recipe.id}>
             Edit this recipe
           </Link>
         </div>
+
+        <div className="card-reveal">
+          <span className="card-title grey-text text-darken-4 fix">{recipe.recipeName}<i className="material-icons right">close</i></span>
+          <p>{recipe.preparation}</p>
+        </div>
+
       </div>
 
     </div>
-
   );
 };
 
