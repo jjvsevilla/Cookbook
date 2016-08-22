@@ -13,12 +13,12 @@ export default function recipeReducer(state = initialState.recipes, action) {
       ];
 
     case types.UPDATE_RECIPE_SUCCESS:
-      let recipeIndex = state.findIndex(recipe => recipe.id == action.recipe.id)
+      let recipeIndex = state.findIndex(recipe => recipe.id == action.recipe.id);
       return state.map((recipe, index) => {
         if (index == recipeIndex) {
-          return Object.assign({}, action.recipe)
+          return Object.assign({}, action.recipe);
         }
-        return recipe
+        return recipe;
       });
 
     default:
