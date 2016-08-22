@@ -13,7 +13,7 @@ NumberOfElementsButton.propTypes = {
   loading: PropTypes.bool.isRequired,
   elements: PropTypes.array.isRequired,
   single: PropTypes.string.isRequired,
-  multiple: PropTypes.string.isRequired,
+  multiple: PropTypes.string.isRequired
 };
 
 export default NumberOfElementsButton;

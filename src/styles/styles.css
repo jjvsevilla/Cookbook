@@ -48,16 +48,19 @@ nav {
   line-height: 30px !important;
 }
 
-
 #app .card .card-title.fix{
   font-size: 16px !important;
   font-weight: bold !important;
 }
 
+#app .card-image .recipe-preview-img{
+  height: 150px !important;
+}
+
 .inputLabelFix{
-  font-size: 30px !important;
+  font-size: 26px !important;
 }
 .selectLabelFix{
-  font-size: 30px !important;
+  font-size: 26px !important;
   margin-top: 20px !important;
 }

@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as recipeActions from '../../actions/recipeActions';
 import RecipeForm from './RecipeForm';
 import toastr from 'toastr';
+import autobind from 'autobind-decorator';
 
 export class ManageRecipePage extends React.Component {
   constructor(props, context) {
@@ -15,21 +16,15 @@ export class ManageRecipePage extends React.Component {
       saving: false
     };
 
-    this.updateRecipeState = this.updateRecipeState.bind(this);
-    this.saveRecipe = this.saveRecipe.bind(this);
+    // this.updateRecipeState = this.updateRecipeState.bind(this);
+    // this.saveRecipe = this.saveRecipe.bind(this);
 
-    this.updateIngredient = this.updateIngredient.bind(this);
-    this.addIngredient = this.addIngredient.bind(this);
-    this.removeIngredient = this.removeIngredient.bind(this);
+    // this.addIngredient = this.addIngredient.bind(this);
+    // this.updateIngredient = this.updateIngredient.bind(this);
+    // this.removeIngredient = this.removeIngredient.bind(this);
   }
 
   componentDidMount() {
-      $('.toc-wrapper').pushpin({ top: 64 });
-      $('.scrollspy').scrollSpy();
-      $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'categoryId', "select[name='categoryId']"));
-  }
-
-  componentDidUpdate(){
       $('.toc-wrapper').pushpin({ top: 64 });
       $('.scrollspy').scrollSpy();
       $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'categoryId', "select[name='categoryId']"));
@@ -41,6 +36,13 @@ export class ManageRecipePage extends React.Component {
     }
   }
 
+  componentDidUpdate(){
+      $('.toc-wrapper').pushpin({ top: 64 });
+      $('.scrollspy').scrollSpy();
+      $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'categoryId', "select[name='categoryId']"));
+  }
+  
+  @autobind
   updateRecipeState(event, field, selector) {
     let _value = "";
     let _field = "";
@@ -56,6 +58,7 @@ export class ManageRecipePage extends React.Component {
     return this.setState({recipe: recipe});
   }
 
+  @autobind
   saveRecipe(event) {
     event.preventDefault();
     this.setState({saving: true});
@@ -74,6 +77,7 @@ export class ManageRecipePage extends React.Component {
       });
   }
 
+  @autobind
   addIngredient(){
     let recipe = Object.assign({}, this.state.recipe);
     const newIngredient = {"name": "", "amount": ""};
@@ -81,6 +85,7 @@ export class ManageRecipePage extends React.Component {
     return this.setState({recipe: recipe});
   }
 
+  @autobind
   updateIngredient(index, event){
     const field = event.target.name;
     let recipe = Object.assign({}, this.state.recipe);
@@ -97,6 +102,7 @@ export class ManageRecipePage extends React.Component {
     return this.setState({recipe: recipe});
   }
 
+  @autobind
   removeIngredient(index){
     let recipe = Object.assign({}, this.state.recipe);
     recipe.ingredients = recipe.ingredients.filter((_, i) => i !== index);

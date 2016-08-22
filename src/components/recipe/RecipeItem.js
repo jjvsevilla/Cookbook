@@ -8,7 +8,7 @@ const RecipeItem = ({recipe}) => {
       <div className="card sticky-action">
 
         <div className="card-image waves-effect waves-block waves-light">
-          <img className="responsive-img" src={recipe.imageUrl} title={recipe.recipeName} />
+          <img className="responsive-img recipe-preview-img" src={recipe.imageUrl} title={recipe.recipeName} />
         </div>
 
         <div className="card-content">

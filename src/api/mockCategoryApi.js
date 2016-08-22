@@ -18,6 +18,10 @@ const categories = [
 
 class CategoryApi {
   static getAllCategories() {
+
+
+
+    
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(Object.assign([], categories));

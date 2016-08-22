@@ -8,9 +8,28 @@ import MaterializeTextAreaInput from '../common/MaterializeTextAreaInput';
 import MaterializeSelectInput from '../common/MaterializeSelectInput';
 import BackButton from '../common/BackButton';
 import SaveFormButton from '../common/SaveFormButton';
+import NavigatorPageLinks from '../common/NavigatorPageLinks';
 import IngredientList from './IngredientList';
 
 const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, addIngredient, updateIngredient, removeIngredient}) => {
+  const pageTabs = [
+    { 
+      "navID": "RecipeName", 
+      "navName": "Recipe Name" 
+    },{ 
+      "navID": "Category", 
+      "navName": "Category"
+    },{ 
+      "navID": "Chef",
+      "navName": "Chef"
+    },{ 
+      "navID": "Ingredients",
+      "navName": "Ingredients"
+    },{ 
+      "navID": "Preparation",
+      "navName": "Preparation"
+    }
+  ];
   return (
     <div className="row">
       <form className="col s10">
@@ -72,15 +91,7 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, ad
         </div>
       </form>
       <div className="col s2">
-        <div className="toc-wrapper">
-          <ul className="section table-of-contents">
-            <li><a href="#RecipeName">Recipe Name</a></li>
-            <li><a href="#Category">Category</a></li>
-            <li><a href="#Chef">Chef</a></li>
-            <li><a href="#Ingredients">Ingredients</a></li>
-            <li><a href="#Preparation">Preparation</a></li>
-          </ul>
-        </div>
+        <NavigatorPageLinks pageTabs={pageTabs} />
       </div>
     </div>
   );
@@ -92,7 +103,10 @@ RecipeForm.propTypes = {
   onSave: React.PropTypes.func.isRequired,
   onChange: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool,
-  errors: React.PropTypes.object
+  errors: React.PropTypes.object,
+  addIngredient: React.PropTypes.func.isRequired,
+  updateIngredient: React.PropTypes.func.isRequired,
+  removeIngredient: React.PropTypes.func.isRequired
 };
 
 export default RecipeForm;

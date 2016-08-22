@@ -31,7 +31,7 @@ MaterializeTextInputWithIcon.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   error: PropTypes.string,
-  iconName: PropTypes.string.isRequired,
+  iconName: PropTypes.string.isRequired
 };
 
 export default MaterializeTextInputWithIcon;

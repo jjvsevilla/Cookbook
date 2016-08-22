@@ -1,0 +1,51 @@
+docker info
+https://hub.docker.com/_/postgres/
+
+https://docs.docker.com/engine/examples/postgresql_service/
+
+ref video
+https://www.youtube.com/watch?v=tbsZUYdVmOs
+
+create postgres container
+docker run --name postgrescontainer -e POSTGRES_PASSWORD=123456abC -d postgres
+
+connect via psql
+docker run -it --rm --link postgrescontainer:postgres postgres psql -h postgres -U postgres
+
+database files folder
+/var/lib/postgresql/data
+
+########
+POSTGRES
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04
+
+default user account
+  postgres  
+
+To use Postgres, we'll need to log into that account:
+sudo -i -u postgres
+
+To get a Postgres prompt:
+psql
+
+exit postgres prompt:
+\q
+
+As the postgres user
+  Create DB
+  createdb Cookbook
+
+  Connect to database
+  psql -d Cookbook
+
+CREATE TABLE Category (
+    id serial PRIMARY KEY,
+    description varchar (50) NOT NULL
+);
+
+INSERT INTO Category (description) VALUES ('Pastas');
+INSERT INTO Category (description) VALUES ('Salads');
+INSERT INTO Category (description) VALUES ('Meat');
+INSERT INTO Category (description) VALUES ('Desserts');
+
+SELECT * FROM Category;

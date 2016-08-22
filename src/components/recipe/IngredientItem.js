@@ -18,7 +18,7 @@ const IngredientItem = ({ingredient, action, addIngredient, updateIngredient, re
           {!isNew && <input type="text" name="amount" value={ingredient.amount} onChange={updateIngredient} />}
         </div>
         <div className="input-field col s8">
-          {!isNew && <input type="text" name="name" value={ingredient.name} onChange={updateIngredient} /> }
+          {!isNew && <input type="text" name="name" value={ingredient.name} onChange={updateIngredient} />}
         </div>
         <div className="input-field col s1">
           {isNew && <a className={style} onClick={addIngredient}><i className="material-icons">{action}</i></a>}
@@ -34,7 +34,7 @@ IngredientItem.propTypes = {
   action: PropTypes.string.isRequired,
   addIngredient: React.PropTypes.func.isRequired,
   updateIngredient: React.PropTypes.func.isRequired,
-  removeIngredient: React.PropTypes.func.isRequired,
+  removeIngredient: React.PropTypes.func.isRequired
 };
 
 export default IngredientItem;
