@@ -64,3 +64,10 @@ nav {
   font-size: 26px !important;
   margin-top: 20px !important;
 }
+#app div.card-action.link-router, #app div.link-router {
+  /*height: 20px !important;*/
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}

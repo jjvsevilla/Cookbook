@@ -5,4 +5,4 @@ module.exports = {
       database: 'blog_dev'
     }
   }
-}
+};

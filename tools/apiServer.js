@@ -6,7 +6,7 @@ import open from 'open';
 //import massive from 'massive';
 
 /* eslint-disable no-console */
-const port = 3030; // 3099 avantica port
+const port = 3040; // 3099 avantica port
 const app = express();
 const compiler = webpack(config);
 
@@ -30,7 +30,7 @@ let pg = require('knex')({
 //var massiveInstance		= massive.connectSync({connectionString : connectionString});
 var db;
 */
-//var db  = require('../src/api/db');
+let db  = require('../src/api/knex');
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,

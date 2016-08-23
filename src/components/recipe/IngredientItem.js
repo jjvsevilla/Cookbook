@@ -17,10 +17,10 @@ const IngredientItem = ({ingredient, action, addIngredient, updateIngredient, re
         <div className="input-field col s3">
           {!isNew && <input type="text" name="amount" value={ingredient.amount} onChange={updateIngredient} />}
         </div>
-        <div className="input-field col s8">
+        <div className="input-field col s7">
           {!isNew && <input type="text" name="name" value={ingredient.name} onChange={updateIngredient} />}
         </div>
-        <div className="input-field col s1">
+        <div className="input-field col s2 center-align">
           {isNew && <a className={style} onClick={addIngredient}><i className="material-icons">{action}</i></a>}
           {!isNew && <a className={style} onClick={removeIngredient}><i className="material-icons">{action}</i></a>}
         </div>

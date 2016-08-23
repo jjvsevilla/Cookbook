@@ -160,7 +160,8 @@ function mapStateToProps(state, ownProps) {
   const categoriesFormattedForDropdown = state.categories.map(category => {
     return {
       value: category.id,
-      text: category.description
+      text: category.description,
+      iconUrl: category.iconUrl
     };
   });
 

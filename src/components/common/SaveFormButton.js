@@ -1,15 +1,17 @@
 import React, {PropTypes} from 'react';
 
-const SaveFormButton = ({onSave, saving, classes}) => (
+const SaveFormButton = ({NavId, onSave, saving, classes}) => (
   <input
+    id={NavId}
     type="submit"
     disabled={saving}
     value={saving ? 'Saving...' : 'Save'}
     className={classes}
-    onClick={onSave}/>   
+    onClick={onSave}/>
 );
 
 SaveFormButton.propTypes = {
+  NavId: PropTypes.string.isRequired,
   onSave: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool,
   classes: PropTypes.string.isRequired

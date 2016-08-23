@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as recipeActions from '../../actions/recipeActions';
+import * as categoryActions from '../../actions/categoryActions';
 import RecipeList from './RecipeList';
 import {browserHistory} from 'react-router';
 import LoadingDots from '../common/LoadingDots';
@@ -62,9 +63,18 @@ RecipesPage.propTypes = {
   loading: PropTypes.bool.isRequired
 };
 
-function mapStateToProps(state, ownProps){  
+function mapStateToProps(state, ownProps){
+  let categories = state.categories;
+  const recipesWithCategory = state.recipes.map(recipe => {
+    let category = categories.find(category => category.id == recipe.categoryId);
+    if(category){
+      return Object.assign({}, recipe, {'categoryName': category.description, 'categoryIcon': category.iconUrl });
+    }
+    return recipe;
+  });
+
   return {
-    recipes: state.recipes,
+    recipes: recipesWithCategory, //state.recipes,
     loading: state.ajaxCallsInProgress > 0
   };
 }

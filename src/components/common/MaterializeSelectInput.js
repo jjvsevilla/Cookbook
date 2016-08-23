@@ -4,12 +4,13 @@ const MaterializeSelectInput = ({NavId, name, label, onChange, defaultOption, va
   return (
     <div className="input-field col s12 scrollspy" id={NavId}>
       <select
+        className="icons"
         name={name}
         value={value}
         onChange={onChange}>
         <option value="" disabled>{defaultOption}</option>
         {options.map((option, index) => {
-          return <option key={index} value={option.value}>{option.text}</option>;
+          return <option key={index} value={option.value} data-icon={option.iconUrl} className="left circle">{option.text}</option>;
         })
         }
       </select>

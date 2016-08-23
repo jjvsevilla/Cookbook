@@ -1,7 +1,7 @@
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
-export default function recipeReducer(state = initialState.recipes, action) {  
+export default function recipeReducer(state = initialState.recipes, action) {
   switch (action.type) {
     case types.LOAD_RECIPES_SUCCESS:
       return action.recipes;
@@ -12,7 +12,7 @@ export default function recipeReducer(state = initialState.recipes, action) {
         Object.assign({}, action.recipe)
       ];
 
-    case types.UPDATE_RECIPE_SUCCESS:
+    case types.UPDATE_RECIPE_SUCCESS: {
       let recipeIndex = state.findIndex(recipe => recipe.id == action.recipe.id);
       return state.map((recipe, index) => {
         if (index == recipeIndex) {
@@ -20,6 +20,7 @@ export default function recipeReducer(state = initialState.recipes, action) {
         }
         return recipe;
       });
+    }
 
     default:
       return state;

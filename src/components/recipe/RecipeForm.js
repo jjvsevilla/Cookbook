@@ -13,26 +13,16 @@ import IngredientList from './IngredientList';
 
 const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, addIngredient, updateIngredient, removeIngredient}) => {
   const pageTabs = [
-    { 
-      "navID": "RecipeName", 
-      "navName": "Recipe Name" 
-    },{ 
-      "navID": "Category", 
-      "navName": "Category"
-    },{ 
-      "navID": "Chef",
-      "navName": "Chef"
-    },{ 
-      "navID": "Ingredients",
-      "navName": "Ingredients"
-    },{ 
-      "navID": "Preparation",
-      "navName": "Preparation"
-    }
+    { "navID": "RecipeName", "navName": "Recipe Name" },
+    { "navID": "Category", "navName": "Category" },
+    { "navID": "Chef", "navName": "Chef" },
+    { "navID": "Ingredients", "navName": "Ingredients" },
+    { "navID": "Preparation", "navName": "Preparation" },
+    { "navID": "SaveForm", "navName": "Save" }
   ];
   return (
     <div className="row">
-      <form className="col s10">
+      <form className="col s9 m10">
         <h3>Manage Recipe</h3>
         <br />
         <div className="row">
@@ -87,10 +77,10 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, ad
         <div className="row">
             <BackButton classes="waves-effect waves-light btn"/>
             &nbsp;
-            <SaveFormButton onSave={onSave} saving={saving} classes="waves-effect waves-light btn red" />
+            <SaveFormButton NavId="SaveForm" onSave={onSave} saving={saving} classes="waves-effect waves-light btn red" />
         </div>
       </form>
-      <div className="col s2">
+      <div className="col s3 m2">
         <NavigatorPageLinks pageTabs={pageTabs} />
       </div>
     </div>
