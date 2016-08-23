@@ -1,5 +1,5 @@
 import delay from './delay';
-const knex = require('./knex');
+import knex from './knex';
 
 const categories = [
   {
@@ -24,15 +24,16 @@ const categories = [
 class CategoryApi {
   static getAllCategories() {
 
-/*
-    debugger;
-    //let caterogies = knex('Category').select().timeout(1000);
-    //console.log(caterogies);
+debugger;    
+//let category = knex.from('Category').select('*').then((rows) => res.json(rows));
 
-let category = knex.table('Category').first('id', 'description').then(function(row) {
-  console.log(row);
-});
-*/
+    const list =  async (req, res) => {
+      let query = await knex.from('Category').select('*');
+      console.log(res.json(query));
+    };
+
+
+
 
 
     return new Promise((resolve, reject) => {

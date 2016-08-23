@@ -1,0 +1,28 @@
+docker run --name pscontainer -p 1433:5432 -e POSTGRES_PASSWORD=Cookbook123 -d postgres
+
+connect to docker ps
+docker run -it --rm --link pscontainer:postgres postgres psql -h postgres -U postgres
+
+CREATE USER juanjo WITH PASSWORD 'juanjo123';
+CREATE DATABASE cookbook;
+GRANT ALL PRIVILEGES ON DATABASE cookbook TO juanjo;
+
+\connect cookbook
+
+CREATE TABLE category (
+    id serial PRIMARY KEY,
+    description varchar (50) NOT NULL,
+    iconUrl varchar(250) NULL
+);
+
+INSERT INTO category (description,iconUrl) VALUES ('Pastas','http://icons.iconarchive.com/icons/icons-land/3d-food/32/Dish-Pasta-Spaghetti-icon.png');
+INSERT INTO category (description,iconUrl) VALUES ('Salads','http://icons.iconarchive.com/icons/aha-soft/desktop-buffet/32/Salad-icon.png');
+INSERT INTO category (description,iconUrl) VALUES ('Meat','http://icons.iconarchive.com/icons/graphicloads/food-drink/32/meat-icon.png');
+INSERT INTO category (description,iconUrl) VALUES ('Desserts','http://icons.iconarchive.com/icons/archigraphs/tea-party/32/Tea-Cake-icon.png');
+
+SELECT * FROM category;
+
+knex dependencies
+npm install knex --save
+npm install pg --save
+

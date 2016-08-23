@@ -7,7 +7,7 @@ ref video
 https://www.youtube.com/watch?v=tbsZUYdVmOs
 
 create postgres container
-docker run --name postgrescontainer -e POSTGRES_PASSWORD=123456abC -d postgres
+docker run --name postgrescontainer -e POSTGRES_PASSWORD=Cookbook123 -d postgres
 
 connect via psql
 docker run -it --rm --link postgrescontainer:postgres postgres psql -h postgres -U postgres
@@ -37,15 +37,3 @@ As the postgres user
 
   Connect to database
   psql -d Cookbook
-
-CREATE TABLE Category (
-    id serial PRIMARY KEY,
-    description varchar (50) NOT NULL
-);
-
-INSERT INTO Category (description) VALUES ('Pastas');
-INSERT INTO Category (description) VALUES ('Salads');
-INSERT INTO Category (description) VALUES ('Meat');
-INSERT INTO Category (description) VALUES ('Desserts');
-
-SELECT * FROM Category;
