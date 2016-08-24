@@ -37,3 +37,24 @@ As the postgres user
 
   Connect to database
   psql -d Cookbook
+
+
+#############################
+create database and seed data
+#############################
+
+npm install knex -g
+knex init
+
+#create schema migration
+knex migrate:make recipe_tables
+knex migrate:latest  
+
+#run in alphabetical order
+knex seed:make 01-category
+knex seed:make 02-recipe
+knex seed:make 03-ingredient
+knex seed:make 04-ingredient_recipe
+
+#seed data
+knex seed:run

@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 
 const MaterializeSelectFilterInput = ({NavId, name, onChange, defaultOption, value, options}) => {
   return (
+    options &&
     <div className="input-field col s12 scrollspy" id={NavId}>
       <select
         className="icons"

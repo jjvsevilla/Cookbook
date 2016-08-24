@@ -55,7 +55,9 @@ class CoursesPage extends React.Component {
 
     return (
       <div>
-        <h1>Courses</h1>
+        <h3 className="header">
+          Courses
+        </h3> 
         <input type="submit"
                value="Add Course"
                className="btn btn-primary"

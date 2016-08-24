@@ -9,6 +9,11 @@ GRANT ALL PRIVILEGES ON DATABASE cookbook TO juanjo;
 
 \connect cookbook
 
+tables
+category
+comment
+ingredient
+
 CREATE TABLE category (
     id serial PRIMARY KEY,
     description varchar (50) NOT NULL,

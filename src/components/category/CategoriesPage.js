@@ -9,15 +9,28 @@ class CategoriesPage extends React.Component {
   }
 
   categoryRow(category, index){
-    return <div key={index}>{category.description}</div>;
+    return (
+      <li key={index} className="collection-item avatar">
+        <img src={category.iconUrl} alt={category.description} className="circle" />
+        <span className="title">{category.description}</span>
+        <p>First Line</p>
+        <a href="#!" className="secondary-content"><i className="material-icons">grade</i></a>
+      </li>
+    );
   }
 
   render() {
     const {categories} = this.props;
     return (
-      <div>
-        <h1>Categories</h1>      
-        {this.props.categories.map(this.categoryRow)}     
+      <div className="row">
+        <div className="col s12">
+          <h3 className="header">
+            Categories
+          </h3>  
+          <ul className="collection">     
+            {categories && categories.map(this.categoryRow)}     
+          </ul>
+        </div>    
       </div>
     );
   }

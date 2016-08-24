@@ -6,7 +6,7 @@ import open from 'open';
 //import massive from 'massive';
 
 /* eslint-disable no-console */
-const port = 3030; // 3099 avantica port
+const port = 3090; // 3099 avantica port
 const app = express();
 const compiler = webpack(config);
 

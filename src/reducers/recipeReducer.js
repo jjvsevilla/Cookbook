@@ -6,6 +6,9 @@ export default function recipeReducer(state = initialState.recipes, action) {
     case types.LOAD_RECIPES_SUCCESS:
       return action.recipes;
 
+    case types.GET_RECIPE_SUCCESS:
+      return action.recipe;      
+
     case types.CREATE_RECIPE_SUCCESS:
       return [
         ...state,

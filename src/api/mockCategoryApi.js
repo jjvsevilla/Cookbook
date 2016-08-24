@@ -1,5 +1,4 @@
 import delay from './delay';
-import knex from './knex';
 
 const categories = [
   {
@@ -23,26 +22,12 @@ const categories = [
 
 class CategoryApi {
   static getAllCategories() {
-
-debugger;    
-//let category = knex.from('Category').select('*').then((rows) => res.json(rows));
-
-    const list =  async (req, res) => {
-      let query = await knex.from('Category').select('*');
-      console.log(res.json(query));
-    };
-
-
-
-
-
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(Object.assign([], categories));
       }, delay);
     });
   }
-
 }
 
 export default CategoryApi;

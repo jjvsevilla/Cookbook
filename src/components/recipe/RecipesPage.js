@@ -61,7 +61,7 @@ class RecipesPage extends React.Component {
               </h3>
             </div>
             <NumberOfElementsButton loading={this.props.loading} elements={recipes} single={`recipe`} multiple={`recipes`}/>
-          </div>
+          </div>          
           <div className="divider"></div>
           <div className="row">
             <RecipeList recipes={recipes} 
@@ -91,11 +91,11 @@ RecipesPage.propTypes = {
   loading: PropTypes.bool.isRequired
 };
 
-function mapStateToProps(state, ownProps){
+function mapStateToProps(state, ownProps){  
   let categories = state.categories;
 
   const recipesWithCategory = state.recipes.map(recipe => {
-    let category = categories.find(category => category.id == recipe.categoryId);
+    let category = categories.find(category => category.id == recipe.category_id);
     if(category){
       return Object.assign({}, recipe, {'categoryName': category.description, 'categoryIcon': category.iconUrl });
     }

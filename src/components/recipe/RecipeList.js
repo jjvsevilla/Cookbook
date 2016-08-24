@@ -4,10 +4,9 @@ import MaterializeSelectFilterInput from '../common/MaterializeSelectFilterInput
 import MaterializeTextFilterInputWithIcon from '../common/MaterializeTextFilterInputWithIcon';
 
 const RecipeList = ({recipes, categories, recipeNameFilter, categoryFilter, onChange}) => {
-  let _recipes =
-  recipes.filter((recipe) => { 
+  let _recipes = recipes.filter((recipe) => { 
     return (recipe.recipeName.toUpperCase().includes(recipeNameFilter.toUpperCase()) || recipeNameFilter === "") &&
-           (recipe.categoryId.toString() === categoryFilter || categoryFilter === ""); 
+           (recipe.category_id.toString() === categoryFilter || categoryFilter === ""); 
   });
 
   return (    
