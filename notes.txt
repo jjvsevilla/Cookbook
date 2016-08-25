@@ -58,3 +58,46 @@ knex seed:make 04-ingredient_recipe
 
 #seed data
 knex seed:run
+
+###########
+
+{
+  "id": 1,
+  "recipeName": "recipe teeeeeest",
+  "category_id": 1,
+  "chef": "chef teeeeeest",
+  "ingredients": [
+    {
+      "name": "teeeeeest",
+      "amount": "1 package teeeeeest"
+    },
+    {
+      "name": "teeeeeest teeeeeest",
+      "amount": "1 cup teeeeeest"
+    }
+  ],
+  "preparation": "preparation teeeeeest",
+  "rating": 2,
+  "imageUrl": "http://162.61.226.249/PicOriginal/P170292013090324_5.jpg",
+  "publishdate": "6/15/2016"
+}
+
+#############
+
+
+          /*
+          var work = [
+              trx("recipe").where('id', id).update(reqData),
+              trx("ingredient_recipe").whereIn('ingredient_id', arrIngredientsRecipe.del).andWhere('recipe_id', id).del()
+          ];
+
+          if(arrIngredientsRecipe.add.length) 
+          {     
+            work.push(trx.insert(arrIngredientsRecipe.add).into("ingredient"));
+
+              //trx("ingredient").whereIn('ingredient_id', arrIngredientsRecipe.del).andWhere('recipe_id', id).del(),
+            work.push(trx.insert(arrIngredientsRecipe.add).into("ingredient_recipe")); 
+          } 
+          
+          return Promise.all(work);
+          */

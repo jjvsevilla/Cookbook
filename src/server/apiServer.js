@@ -3,7 +3,7 @@ import cors from 'cors';
 import knex from './knex';
 import bodyParser from 'body-parser';
 import Router from './apiRoutes';
-import serverConfig from './serverConfig'
+import serverConfig from './serverConfig';
 
 const db = knex;
 const app = express();

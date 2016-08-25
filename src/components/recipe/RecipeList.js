@@ -45,8 +45,7 @@ RecipeList.propTypes = {
   categories: PropTypes.array.isRequired,
   recipeNameFilter: PropTypes.string,
   categoryFilter: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  updateRecipeNameFilter: PropTypes.func.isRequired  
+  onChange: PropTypes.func.isRequired
 };
 
 export default RecipeList;

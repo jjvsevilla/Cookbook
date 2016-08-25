@@ -17,7 +17,7 @@ const MaterializeTextInputWithIcon = ({NavId, name, label, onChange, placeholder
         onChange={onChange}
         placeholder={placeholder}
         className="validate"/>
-      <label htmlFor={name} className="inputLabelFix active">{label}</label>
+      <label htmlFor={name} className="active inputLabelFix">{label}</label>
       {error && <div className="left-alert">{error}</div>}
     </div>
   );

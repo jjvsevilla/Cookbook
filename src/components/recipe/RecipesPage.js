@@ -68,8 +68,7 @@ class RecipesPage extends React.Component {
                         categories={categories} 
                         recipeNameFilter={this.state.filter.recipeName}
                         categoryFilter={this.state.filter.categoryId}
-                        onChange={this.updateFilterState}
-                        updateRecipeNameFilter={this.updateRecipeNameFilter}/>
+                        onChange={this.updateFilterState}/>
           </div>
           <div className="row">
             <div className="fixed-action-btn">

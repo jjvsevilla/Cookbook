@@ -6,42 +6,65 @@ import RecipeForm from './RecipeForm';
 import toastr from 'toastr';
 import autobind from 'autobind-decorator';
 
+import request from 'superagent';
+import apiConfig from '../../actions/apiConfig';
+
 export class ManageRecipePage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
       recipe: Object.assign({}, props.recipe),
+      recipeId: '',
       errors: {},
       saving: false
     };
 
     // this.updateRecipeState = this.updateRecipeState.bind(this);
     // this.saveRecipe = this.saveRecipe.bind(this);
-
     // this.addIngredient = this.addIngredient.bind(this);
     // this.updateIngredient = this.updateIngredient.bind(this);
     // this.removeIngredient = this.removeIngredient.bind(this);
+  }
+  
+  getRecipe(id) {
+    let _this = this;
+    request
+      .get(`${apiConfig.apiHost}/recipe/` + id)
+      .end(function(err, res){  
+        if (err || !res.ok) {
+          toastr.error(err);
+          _this.setState({saving: false});      
+        }else{  
+          _this.setState({recipe: Object.assign({}, res.body)});
+        }        
+      });
   }
 
   componentDidMount() {
       $('.toc-wrapper').pushpin({ top: 64 });
       $('.scrollspy').scrollSpy();
-      $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'categoryId', "select[name='categoryId']"));
+      $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'category_id', "select[name='categoryId']"));
+      this.getRecipe(this.props.recipeId);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.recipe.id != nextProps.recipe.id) {
+    //if (this.props.recipeId != nextProps.recipeId) {
+/*
+      debugger;
+      let recipeId = this.props.recipeId;
+      let recipe = this.getRecipe(recipeId);    
       this.setState({recipe: Object.assign({}, nextProps.recipe)});
-    }
+*/
+    //}
   }
 
   componentDidUpdate(){
       $('.toc-wrapper').pushpin({ top: 64 });
       $('.scrollspy').scrollSpy();
-      $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'categoryId', "select[name='categoryId']"));
+      $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'category_id', "select[name='categoryId']"));
   }
-  
+
   @autobind
   updateRecipeState(event, field, selector) {
     let _value = "";
@@ -67,6 +90,13 @@ export class ManageRecipePage extends React.Component {
     if(recipe.imageUrl === ""){
       recipe.imageUrl = "https://image.freepik.com/free-icon/covered-plate-of-food_318-61406.jpg";
     }
+    if(recipe.publishdate === ""){
+      recipe.publishdate = new Date().toISOString().split('T')[0];
+    }    
+    if(recipe.rating === ""){
+      recipe.rating = 1;
+    }
+
     this.setState({recipe: recipe});
 
     this.props.actions.saveRecipe(this.state.recipe)
@@ -116,7 +146,9 @@ export class ManageRecipePage extends React.Component {
   }
 
   render(){
+    const {recipe} = this.props;
     return (
+      recipe &&
       <RecipeForm
         allCategories={this.props.categories}
         onChange={this.updateRecipeState}
@@ -151,11 +183,17 @@ function getRecipeById(recipes, id) {
 function mapStateToProps(state, ownProps) {
   const recipeId = ownProps.params.id; // from the path `/recipe/:id`
 
-  let recipe = {id: '', recipeName: '', categoryId: '', chef: '', ingredients: [], preparation: '', rating: '', imageUrl: '', publishdate: ''};
+  let recipe = {id: '', category_id: '', recipeName: '', chef: '', preparation: '', rating: '', imageUrl: '', publishdate: '', ingredients: []};
 
-  if (recipeId && state.recipes.length > 0) {
-    recipe = getRecipeById(state.recipes, recipeId);
-  }
+/*
+  if (recipeId){ //} && state.recipes.length > 0) {
+    this.setState({recipeId: recipeId});
+    //recipe = getRecipeById(state.recipes, recipeId);
+  }  
+*/
+
+  //debugger;
+
 
   const categoriesFormattedForDropdown = state.categories.map(category => {
     return {
@@ -165,7 +203,9 @@ function mapStateToProps(state, ownProps) {
     };
   });
 
+  //debugger;
   return {
+    recipeId: recipeId,
     recipe: recipe,
     categories: categoriesFormattedForDropdown
   };

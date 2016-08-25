@@ -19,12 +19,14 @@ exports.up = function(knex, Promise) {
 		//FK
 		tbl.integer('category_id').notNullable().references('id').inTable('category');		
 		//Fields
-		tbl.string('recipeName', 100).notNullable().defaultTo('');
+    //tbl.string('recipeName', 100).notNullable().unique('uq_recipe_recipeName').defaultTo('');
+    tbl.string('recipeName', 100).notNullable().defaultTo(''); 
 		tbl.string('chef', 100).notNullable().defaultTo('');
     tbl.string('preparation', 999).notNullable().defaultTo('');
-    tbl.integer('rating').notNullable().defaultTo(5);
+    //tbl.integer('rating').notNullable().defaultTo(5);
+    tbl.integer('rating').nullable().defaultTo(1);
 		tbl.string('imageUrl', 250).notNullable().defaultTo('');
-    tbl.date('publishdate');
+    tbl.date('publishdate').nullable();
 	})
 
 	//<tag>

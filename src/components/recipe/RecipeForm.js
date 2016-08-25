@@ -20,7 +20,11 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, ad
     { "navID": "Preparation", "navName": "Preparation" },
     { "navID": "SaveForm", "navName": "Save" }
   ];
+
+  //debugger;
+
   return (
+    recipe &&
     <div className="row">
       <form className="col s9 m10">
         <h3>Manage Recipe</h3>
@@ -40,10 +44,10 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, ad
             NavId="Category"
             name="categoryId"
             label="Category"
-            value={recipe.categoryId}
+            value={recipe.category_id}
             defaultOption="Select Category"
             options={allCategories}
-            onChange={onChange} error={errors.categoryId}/>
+            onChange={onChange} error={errors.category_id}/>
         </div>
         <div className="row">
           <MaterializeTextInputWithIcon
@@ -56,6 +60,7 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, ad
             iconName="account_circle"/>
         </div>
         <div>
+          {recipe.ingredients &&
           <IngredientList
             NavId="Ingredients"
             ingredients={recipe.ingredients}
@@ -63,7 +68,7 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, ad
             label="Ingredients"
             addIngredient={addIngredient}
             updateIngredient={updateIngredient}
-            removeIngredient={removeIngredient}/>
+            removeIngredient={removeIngredient}/>}
         </div>
         <div className="row">
           <MaterializeTextAreaInput

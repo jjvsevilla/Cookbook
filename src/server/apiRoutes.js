@@ -1,7 +1,7 @@
 import express from 'express';
+import {idToMMObjArrInsert, idToMMObjArrUpdate, arrToIngredientArr} from './util/helper';
 
-export default function Router(db){
-  
+export default function Router(db){  
   //category
   let getCategoryAll = async (req, res) => {    
     let query = await db.from('category')
@@ -64,22 +64,100 @@ export default function Router(db){
                       .then();
 
     let results = await Promise.all([qrecipe, qingredients]);
-
     let recipe = results[0];
     recipe.ingredients = results[1];
-
-    console.log(JSON.stringify(recipe));
-
     return res.json(recipe); 
+  }
 
+  let insertRecipe = async (req, res) => {
+    console.log("start insertRecipe!");
+    let reqData = req.body;
+    let ingredients = reqData.ingredients;
+    delete reqData.ingredients;
+    delete reqData.id;  
+    //console.log(reqData);
+    return await db.transaction(function (trx)
+    {
+      return trx
+        .insert(reqData, 'id').into("recipe")
+        .then(function (ids)
+        {
+          console.log("insert recipe success!");
+          reqData.id = ids[0];
+          if(ingredients.length) 
+          { 
+            return trx
+              .insert(ingredients, 'id').into("ingredient")
+              .then(function(ids)
+              {     
+                  console.log("insert ingredient success!");
+                  let arrIngredientsRecipe = idToMMObjArrInsert("ingredient_id", ids, "recipe_id", reqData.id);
+                  //console.log(arrIngredientsRecipe);
+                  return trx.insert(arrIngredientsRecipe).into("ingredient_recipe"); 
+              })
+          }
+        })
+        .then(function()
+        {
+          console.log("finish insertRecipe!");
+          return res.json(reqData);
+        });
+    }).catch(function(err) {
+      console.error("error insertRecipe! " + err);
+      res.status(500).send(err);
+    });
+  }
 
-    // return Promise.all([qrecipe, qingredients]).then(function(results)
-    // {
-    //     var recipe = results[0];
-    //     recipe.ingredients = results[1];
-    //     return recipe; 
-    // });
+  let updateRecipe = async (req, res) => {
+    console.log("start updateRecipe!");
+    let reqData = req.body;
+    var id = reqData.id;
+    var newIngredientsIDs = reqData.ingredients;
+    delete reqData.ingredients;
+    delete reqData.id;  
+    //console.log(reqData);
 
+    var arrIngredientsRecipe;
+    let qIngredients = db("ingredient_recipe").pluck('ingredient_id').where('recipe_id', id).then();
+
+    return await Promise.all([qIngredients])
+    .then(function(results){   
+        arrIngredientsRecipe = idToMMObjArrUpdate(newIngredientsIDs, results[0], "ingredient_id", "recipe_id", id);
+        console.log("filter arrIngredientsRecipe success!");
+    })
+    .then(function(){
+      return db.transaction(function(trx)
+      {
+        return trx("recipe").where('id', id).update(reqData)
+        .then(function(ids)
+        {
+          return trx("ingredient_recipe").whereIn('ingredient_id', arrIngredientsRecipe.del).andWhere('recipe_id', id).del()
+          .then(function(){
+            if(arrIngredientsRecipe.add.length) {
+              let arrAux = arrToIngredientArr(arrIngredientsRecipe.add, "ingredient_id", "name", "amount");
+              console.log(arrAux);
+              
+              return trx.insert(arrAux, 'id').into("ingredient")
+              .then(function(ids){
+                let arr = idToMMObjArrInsert("ingredient_id", ids, "recipe_id", id);
+                return trx.insert(arr).into("ingredient_recipe")
+                .then(function(){
+                  console.log("finish update!");
+                })
+              })
+            }
+          })
+        })
+      })
+    })
+    .then(function(){
+      console.log("finish updateRecipe!");
+      return res.json(reqData);
+    })
+    .catch(function(err){
+      console.error("error updateRecipe! " + err);
+      res.status(500).send(err);
+    });
   }
 
   let router = express.Router();
@@ -88,18 +166,20 @@ export default function Router(db){
         .get(getCategoryAll);
 
   router.route('/recipe')
-        .get(getRecipeAll);
+        .get(getRecipeAll)
+        .post(insertRecipe);
   
   /*
   router.route('/recipe/:id')
         .get(getRecipeById);
   */
-  router.route('/recipe/:id/ingredients')
-        .get(getIngredientsByRecipe);
-          
 
   router.route('/recipe/:id')
-        .get(getRecipe);          
+        .get(getRecipe)
+        .put(updateRecipe);  
+
+  router.route('/recipe/:id/ingredients')
+        .get(getIngredientsByRecipe);
 
   return router;
 }
