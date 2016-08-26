@@ -11,7 +11,7 @@ import CategoriesPage from './components/category/CategoriesPage';
 
 export default (
   <Route path="/" component={App}> // always load the App component and then nest these other items, pass them as children based on the routing
-    <IndexRoute component={HomePage} /> //default page
+    <IndexRoute component={RecipesPage} /> //default page
     <Route path="about" component={AboutPage} />
     <Route path="courses" component={CoursesPage} />
     <Route path="course" component={ManageCoursePage} />

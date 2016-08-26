@@ -8,6 +8,7 @@ import autobind from 'autobind-decorator';
 
 import request from 'superagent';
 import apiConfig from '../../actions/apiConfig';
+import materializecss from 'materialize-css';
 
 export class ManageRecipePage extends React.Component {
   constructor(props, context) {
@@ -42,10 +43,23 @@ export class ManageRecipePage extends React.Component {
   }
 
   componentDidMount() {
-      $('.toc-wrapper').pushpin({ top: 64 });
-      $('.scrollspy').scrollSpy();
-      $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'category_id', "select[name='categoryId']"));
-      this.getRecipe(this.props.recipeId);
+    $('.toc-wrapper').pushpin({ top: 64 });
+    $('.scrollspy').scrollSpy();
+    $('textarea').trigger('autoresize');
+    $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'category_id', "select[name='categoryId']"));
+    //this.getRecipe(this.props.recipeId);
+
+    let recipeId = this.props.recipeId;
+    if (recipeId && recipeId.length>0){
+      this.props.actions.getRecipe(recipeId)
+        .then((result) => {
+          this.setState({recipe: Object.assign({}, result)});
+        })
+        .catch(error => {
+          toastr.error(error);
+          this.setState({saving: false});
+        });   
+    }  
   }
 
   componentWillReceiveProps(nextProps) {
@@ -60,9 +74,11 @@ export class ManageRecipePage extends React.Component {
   }
 
   componentDidUpdate(){
-      $('.toc-wrapper').pushpin({ top: 64 });
-      $('.scrollspy').scrollSpy();
-      $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'category_id', "select[name='categoryId']"));
+    $('.toc-wrapper').pushpin({ top: 64 });
+    $('.scrollspy').scrollSpy();
+    $('textarea').trigger('autoresize');
+    Materialize.updateTextFields();
+    $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'category_id', "select[name='categoryId']"));
   }
 
   @autobind
@@ -87,6 +103,7 @@ export class ManageRecipePage extends React.Component {
     this.setState({saving: true});
 
     let recipe = this.state.recipe;
+    
     if(recipe.imageUrl === ""){
       recipe.imageUrl = "https://image.freepik.com/free-icon/covered-plate-of-food_318-61406.jpg";
     }
@@ -145,6 +162,11 @@ export class ManageRecipePage extends React.Component {
     this.context.router.push('/recipes');
   }
 
+  @autobind
+  goBack() {
+    this.context.router.push('/recipes');
+  }
+
   render(){
     const {recipe} = this.props;
     return (
@@ -159,6 +181,7 @@ export class ManageRecipePage extends React.Component {
         addIngredient={this.addIngredient}
         updateIngredient={this.updateIngredient}
         removeIngredient={this.removeIngredient}
+        goBack={this.goBack}
       />
     );
   }
@@ -181,19 +204,14 @@ function getRecipeById(recipes, id) {
 }
 
 function mapStateToProps(state, ownProps) {
-  const recipeId = ownProps.params.id; // from the path `/recipe/:id`
+  const recipeId = ownProps.params.id;
+  let auxId = '';
 
   let recipe = {id: '', category_id: '', recipeName: '', chef: '', preparation: '', rating: '', imageUrl: '', publishdate: '', ingredients: []};
 
-/*
-  if (recipeId){ //} && state.recipes.length > 0) {
-    this.setState({recipeId: recipeId});
-    //recipe = getRecipeById(state.recipes, recipeId);
+  if (recipeId && recipeId.length>0){ 
+    auxId = recipeId;
   }  
-*/
-
-  //debugger;
-
 
   const categoriesFormattedForDropdown = state.categories.map(category => {
     return {
@@ -203,9 +221,8 @@ function mapStateToProps(state, ownProps) {
     };
   });
 
-  //debugger;
   return {
-    recipeId: recipeId,
+    recipeId: auxId,
     recipe: recipe,
     categories: categoriesFormattedForDropdown
   };

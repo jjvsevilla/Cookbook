@@ -71,3 +71,8 @@ nav {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
+
+.modal .modal-content .modal-preview-img{
+  width: 350px !important;
+  height: 150px !important;
+}

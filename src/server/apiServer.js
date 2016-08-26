@@ -1,19 +1,17 @@
 import express from 'express';
 import cors from 'cors';
-import knex from './knex';
 import bodyParser from 'body-parser';
 import Router from './apiRoutes';
 import serverConfig from './serverConfig';
 
-const db = knex;
 const app = express();
-const port = serverConfig.port; //process.env.PORT || 3091;
+const port = serverConfig.port;
 
+const apiRoutes = Router();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-
-const apiRoutes = Router(db);
-app.use('/api/', cors(), apiRoutes);
+app.use(cors());
+app.use('/api/',  apiRoutes);
 
 app.get('/', function(req, res){
   res.send('Welcome to my API Server!');

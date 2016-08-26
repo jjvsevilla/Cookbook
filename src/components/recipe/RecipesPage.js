@@ -7,6 +7,8 @@ import RecipeList from './RecipeList';
 import {browserHistory} from 'react-router';
 import LoadingDots from '../common/LoadingDots';
 import NumberOfElementsButton from '../common/NumberOfElementsButton';
+import ConfirmModal from '../common/ConfirmModal';
+import toastr from 'toastr';
 import autobind from 'autobind-decorator';
 
 class RecipesPage extends React.Component {
@@ -17,16 +19,28 @@ class RecipesPage extends React.Component {
       filter: {
         recipeName: "",
         categoryId: ""
+      },
+      recipeId: "",
+      modal: {    
+        controlId: "modalDeleteRecipe",                              
+        header: "Delete Recipe Confirmation",
+        content: "Are you sure you want to delete this recipe?",
+        confirmText: "Accept",
+        cancelText: "Cancel",
+        objectName: "",
+        objectImageUrl: ""
       }
     };
   }
 
   componentDidMount() {
-      $("select[name='categoryId']").material_select(this.updateFilterState.bind(this, undefined, 'categoryId', "select[name='categoryId']"));
+    $("select[name='categoryId']").material_select(this.updateFilterState.bind(this, undefined, 'categoryId', "select[name='categoryId']"));
+    $('.modal-trigger').leanModal();
   }
 
   componentDidUpdate(){
-      $("select[name='categoryId']").material_select(this.updateFilterState.bind(this, undefined, 'categoryId', "select[name='categoryId']"));
+    $("select[name='categoryId']").material_select(this.updateFilterState.bind(this, undefined, 'categoryId', "select[name='categoryId']"));
+    $('.modal-trigger').leanModal();
   }
 
   redirectToAddRecipePage() {
@@ -49,8 +63,32 @@ class RecipesPage extends React.Component {
     return this.setState({filter: filter});
   }  
 
+  @autobind
+  setDeleteRecipeId(id, objectName, objectImageUrl){
+    this.setState({recipeId: id});
+    let modal = Object.assign({}, this.state.modal, { objectName: objectName}, { objectImageUrl: objectImageUrl});  
+    this.setState({modal: modal });
+  }
+
+  @autobind
+  deleteRecipe(){
+    let id = this.state.recipeId;
+    this.props.actions.deleteRecipe(id)
+      .then((res) => {
+        $('#' + this.state.modal.controlId).closeModal();
+        this.setState({saving: false});
+        toastr.success('Recipe deleted');
+      })
+      .catch(error => {
+        toastr.error(error);
+        this.setState({saving: false});
+      });      
+  }
+
   render() {
     const {recipes, categories, loading} = this.props;
+    const modal = this.state.modal;
+
     return (
       <div className="row">
         <div className="col s12">
@@ -68,7 +106,18 @@ class RecipesPage extends React.Component {
                         categories={categories} 
                         recipeNameFilter={this.state.filter.recipeName}
                         categoryFilter={this.state.filter.categoryId}
-                        onChange={this.updateFilterState}/>
+                        onChange={this.updateFilterState}
+                        setDeleteRecipeId={this.setDeleteRecipeId}
+                        confirmModalId={modal.controlId}/>
+
+            <ConfirmModal controlId={modal.controlId}
+                          header={modal.header}
+                          content={modal.content}
+                          confirmAction={this.deleteRecipe} 
+                          confirmText={modal.confirmText}
+                          cancelText={modal.cancelText}
+                          objectName={modal.objectName}
+                          objectImageUrl={modal.objectImageUrl}/>                            
           </div>
           <div className="row">
             <div className="fixed-action-btn">
@@ -110,7 +159,7 @@ function mapStateToProps(state, ownProps){
   });
 
   return {
-    recipes: recipesWithCategory, //state.recipes,
+    recipes: recipesWithCategory,
     categories: categoriesFormattedForDropdown,
     loading: state.ajaxCallsInProgress > 0
   };

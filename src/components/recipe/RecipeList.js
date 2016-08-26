@@ -3,7 +3,7 @@ import RecipeItem from './RecipeItem';
 import MaterializeSelectFilterInput from '../common/MaterializeSelectFilterInput';
 import MaterializeTextFilterInputWithIcon from '../common/MaterializeTextFilterInputWithIcon';
 
-const RecipeList = ({recipes, categories, recipeNameFilter, categoryFilter, onChange}) => {
+const RecipeList = ({recipes, categories, recipeNameFilter, categoryFilter, onChange, confirmModalId, setDeleteRecipeId}) => {
   let _recipes = recipes.filter((recipe) => { 
     return (recipe.recipeName.toUpperCase().includes(recipeNameFilter.toUpperCase()) || recipeNameFilter === "") &&
            (recipe.category_id.toString() === categoryFilter || categoryFilter === ""); 
@@ -33,7 +33,7 @@ const RecipeList = ({recipes, categories, recipeNameFilter, categoryFilter, onCh
       </div>
       <div className="row">
         {_recipes.map(recipe =>
-          <RecipeItem key={recipe.id} recipe={recipe}/>
+          <RecipeItem key={recipe.id} recipe={recipe} confirmModalId={confirmModalId} setDeleteRecipeId={setDeleteRecipeId}/>
         )}
       </div>
     </div>
@@ -45,7 +45,9 @@ RecipeList.propTypes = {
   categories: PropTypes.array.isRequired,
   recipeNameFilter: PropTypes.string,
   categoryFilter: PropTypes.string,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  confirmModalId: PropTypes.string,
+  setDeleteRecipeId: PropTypes.func
 };
 
 export default RecipeList;

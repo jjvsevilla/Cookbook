@@ -1,7 +1,7 @@
 import CategoryApi from '../api/mockCategoryApi';
 import * as types from './actionTypes';
 import {beginAjaxCall,ajaxCallError} from './ajaxStatusActions';
-import request from 'superagent';
+import superagent from 'superagent';
 import apiConfig from './apiConfig';
 
 export function loadCategoriesSuccess(categories) {
@@ -11,7 +11,7 @@ export function loadCategoriesSuccess(categories) {
 export function loadCategories() {
   return dispatch => {
     dispatch(beginAjaxCall());
-    request
+    superagent
       .get(`${apiConfig.apiHost}/category`)
       .end(function(err, res){  
         if (err || !res.ok) {

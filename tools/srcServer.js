@@ -3,34 +3,10 @@ import webpack from 'webpack';
 import path from 'path';
 import config from '../webpack.config.dev';
 import open from 'open';
-//import massive from 'massive';
 
-/* eslint-disable no-console */
-const port = 3090; // 3099 avantica port
+const port = 3090;
 const app = express();
 const compiler = webpack(config);
-
-/*
-// PostgreSQL
-const dbconfig = {
-	"postgres": {
-		"db"       : "Cookbook",
-		"user"     : "postgres",
-		"password" : "",
-		"host"     : "localhost"
-	}
-};
-
-const connectionString	= "postgres://"+dbconfig.postgres.user+":"+dbconfig.postgres.password+"@"+dbconfig.postgres.host+"/"+dbconfig.postgres.db;
-let pg = require('knex')({
-  client: 'pg',
-  connection: connectionString,
-  searchPath: 'knex,public'
-});
-//var massiveInstance		= massive.connectSync({connectionString : connectionString});
-var db;
-*/
-//var db  = require('../src/api/db');
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,

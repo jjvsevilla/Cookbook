@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 
-const RecipeItem = ({recipe}) => {
+const RecipeItem = ({recipe, confirmModalId, setDeleteRecipeId}) => {
   return (
     <div className="col s12 m6 l4">
       <div className="card sticky-action">
@@ -23,16 +23,18 @@ const RecipeItem = ({recipe}) => {
           <p className="truncate">{recipe.preparation}</p>
         </div>
         <div className="card-action link-router">
-          <Link to={'/recipe/' + recipe.id}>
-            <div className="row valign-wrapper link-router">
-              <div className="col s1 valign">
-                <i className="material-icons">mode_edit</i>
+          <div className="row link-router valign-wrapper">
+              <div className="col s6 valign center-align">
+                <Link to={'/recipe/' + recipe.id}>
+                  <i className="material-icons">mode_edit</i>
+                </Link>
               </div>
-              <div className="col s11 valign">
-                Edit this recipe
+              <div className="col s6 valign center-align">
+                <a className="modal-trigger" href={'#' + confirmModalId} onClick={setDeleteRecipeId.bind(this, recipe.id, recipe.recipeName, recipe.imageUrl)}>
+                  <i className="material-icons">delete</i>
+                </a>     
               </div>
-            </div>
-          </Link>
+          </div>
         </div>
         <div className="card-reveal">
           <div className="row valign-wrapper">
@@ -51,7 +53,9 @@ const RecipeItem = ({recipe}) => {
 };
 
 RecipeItem.propTypes = {
-  recipe: PropTypes.object.isRequired
+  recipe: PropTypes.object.isRequired,
+  confirmModalId: PropTypes.string,
+  setDeleteRecipeId: PropTypes.func
 };
 
 export default RecipeItem;

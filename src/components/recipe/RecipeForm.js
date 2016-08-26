@@ -11,7 +11,7 @@ import SaveFormButton from '../common/SaveFormButton';
 import NavigatorPageLinks from '../common/NavigatorPageLinks';
 import IngredientList from './IngredientList';
 
-const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, addIngredient, updateIngredient, removeIngredient}) => {
+const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, addIngredient, updateIngredient, removeIngredient, goBack}) => {
   const pageTabs = [
     { "navID": "RecipeName", "navName": "Recipe Name" },
     { "navID": "Category", "navName": "Category" },
@@ -20,8 +20,6 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, ad
     { "navID": "Preparation", "navName": "Preparation" },
     { "navID": "SaveForm", "navName": "Save" }
   ];
-
-  //debugger;
 
   return (
     recipe &&
@@ -80,7 +78,7 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, ad
             error={errors.preparation}/>
         </div>
         <div className="row">
-            <BackButton classes="waves-effect waves-light btn"/>
+            <BackButton classes="waves-effect waves-light btn" goBack={goBack}/>
             &nbsp;
             <SaveFormButton NavId="SaveForm" onSave={onSave} saving={saving} classes="waves-effect waves-light btn red" />
         </div>
@@ -101,7 +99,8 @@ RecipeForm.propTypes = {
   errors: React.PropTypes.object,
   addIngredient: React.PropTypes.func.isRequired,
   updateIngredient: React.PropTypes.func.isRequired,
-  removeIngredient: React.PropTypes.func.isRequired
+  removeIngredient: React.PropTypes.func.isRequired,
+  goBack: React.PropTypes.func.isRequired,
 };
 
 export default RecipeForm;

@@ -6,9 +6,14 @@ export default function recipeReducer(state = initialState.recipes, action) {
     case types.LOAD_RECIPES_SUCCESS:
       return action.recipes;
 
-    // case types.GET_RECIPE_SUCCESS:
-    //   return action.recipes; // only 1      
-
+    case types.GET_RECIPE_SUCCESS:
+      return state;
+/*
+      return state.filter((recipe) => { 
+        return recipe.id === action.recipes.id; 
+      });
+      //return action.recipes; // only 1      
+*/
     case types.CREATE_RECIPE_SUCCESS:
       return [
         ...state,
@@ -24,6 +29,13 @@ export default function recipeReducer(state = initialState.recipes, action) {
         return recipe;
       });
     }
+
+    case types.DELETE_RECIPE_SUCCESS: {
+      let recipeId = action.recipe;
+      return state.filter((recipe) => { 
+        return recipe.id != recipeId; 
+      });
+    }    
 
     default:
       return state;
