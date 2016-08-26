@@ -58,7 +58,7 @@ export function getRecipe(id) {
           }        
         })
     ));
-  }
+  };
 }
 
 export function saveRecipe(recipe) {
@@ -100,7 +100,7 @@ export function saveRecipe(recipe) {
           })
       ));
     }
-  }
+  };
 }
 
 export function deleteRecipe(id) {
@@ -121,5 +121,5 @@ export function deleteRecipe(id) {
         })          
     ));
 
-  }
-};
+  };
+}
