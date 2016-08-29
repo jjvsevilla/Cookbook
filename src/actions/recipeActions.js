@@ -27,7 +27,6 @@ export function deleteRecipeSuccess(recipe){
 export function loadRecipes() {
   return function(dispatch){
     dispatch(beginAjaxCall());
-
     superagent
       .get(`${apiConfig.apiHost}/recipe`)
       .end(function(err, res){
@@ -73,6 +72,9 @@ export function saveRecipe(recipe) {
           .send(recipe)
           .end(function(err, res){
             if (err || !res.ok) {
+              if(err.response && err.response.body && err.response.body.constraint && err.response.body.constraint === "uq_recipe_recipename"){
+                err.message = "The recipe name already exist! Try with another name.";  
+              }
               dispatch(ajaxCallError());
               reject(err);
             } else {
@@ -89,7 +91,13 @@ export function saveRecipe(recipe) {
           .set('Content-Type', 'application/json')
           .send(recipe)
           .end(function(err, res){
-            if (err || !res.ok) {
+            if (err || !res.ok) {              
+              if(err.response && err.response.text && err.response.text.includes('uq_recipe_recipename')){
+                err.message = "The recipe name already exist! Try with another name.";  
+              }
+              else if (err.response && err.response.text && err.response.text.includes('22P02')){
+                err.message = "You must select a valid category.";  
+              }
               dispatch(ajaxCallError());
               reject(err);
             } else {

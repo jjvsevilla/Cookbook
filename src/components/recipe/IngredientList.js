@@ -4,12 +4,18 @@ import IngredientItem from './IngredientItem';
 const IngredientList = ({NavId, ingredients, name, label, addIngredient, updateIngredient, removeIngredient}) => {
   let addNewIngredient, newIngredient;
   let newIndex=0;
+  
   if(ingredients && ingredients.length<10){
     newIndex=ingredients.length;
     newIngredient = {};
     addNewIngredient = (
-      <IngredientItem key={newIndex} ingredient={newIngredient} action="add"
-        addIngredient={addIngredient} updateIngredient={updateIngredient.bind(this, newIndex)} removeIngredient={removeIngredient}/>
+      <IngredientItem 
+        key={newIndex} 
+        ingredient={newIngredient} 
+        action="add"
+        addIngredient={addIngredient} 
+        updateIngredient={updateIngredient.bind(this, newIndex)} 
+        removeIngredient={removeIngredient}/>
     );
   }
 
@@ -26,8 +32,13 @@ const IngredientList = ({NavId, ingredients, name, label, addIngredient, updateI
             </div>
           </li>
           {ingredients && ingredients.map((ingredient, index) =>
-            <IngredientItem key={index} ingredient={ingredient} action="delete"
-              addIngredient={addIngredient} updateIngredient={updateIngredient.bind(this, index)} removeIngredient={removeIngredient.bind(this, index)}/>
+            <IngredientItem 
+              key={index} 
+              ingredient={ingredient} 
+              action="delete"
+              addIngredient={addIngredient} 
+              updateIngredient={updateIngredient.bind(this, index)} 
+              removeIngredient={removeIngredient.bind(this, index)}/>
           )}
           {addNewIngredient}
         </ul>

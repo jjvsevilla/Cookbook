@@ -3,8 +3,26 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as categoryActions from '../../actions/categoryActions';
 
-class CategoriesPage extends React.Component {
- constructor(props, context) {
+const mapStateToProps = (state, ownProps) => {
+  return {
+    categories: state.categories
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(categoryActions, dispatch)
+  };
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class CategoriesPage extends React.Component {
+  static propTypes = {
+    categories: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired
+  };
+
+  constructor(props, context) {
     super(props, context);
   }
 
@@ -35,22 +53,3 @@ class CategoriesPage extends React.Component {
     );
   }
 }
-
-CategoriesPage.propTypes = {
-  categories: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
-};
-
-function mapStateToProps(state, ownProps){
-  return {
-    categories: state.categories
-  };
-}
-
-function mapDispatchToProps(dispatch){
-  return {
-    actions: bindActionCreators(categoryActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategoriesPage);

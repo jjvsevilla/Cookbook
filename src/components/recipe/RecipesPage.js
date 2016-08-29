@@ -11,7 +11,47 @@ import ConfirmModal from '../common/ConfirmModal';
 import toastr from 'toastr';
 import autobind from 'autobind-decorator';
 
-class RecipesPage extends React.Component {
+const mapStateToProps = (state, ownProps) => {  
+  let categories = state.categories;
+
+  const recipesWithCategory = state.recipes.map(recipe => {
+    let category = categories.find(category => category.id == recipe.category_id);
+    if(category){
+      return Object.assign({}, recipe, {'categoryName': category.description, 'categoryIcon': category.iconUrl });
+    }
+    return recipe;
+  });
+
+  const categoriesFormattedForDropdown = categories.map(category => {
+    return {
+      value: category.id,
+      text: category.description,
+      iconUrl: category.iconUrl
+    };
+  });
+
+  return {
+    recipes: recipesWithCategory,
+    categories: categoriesFormattedForDropdown,
+    loading: state.ajaxCallsInProgress > 0
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(recipeActions, dispatch)
+  };
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class RecipesPage extends React.Component {
+  
+  static propTypes = {
+    recipes: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired
+  };
+
  constructor(props, context) {
     super(props, context);
 
@@ -132,43 +172,3 @@ class RecipesPage extends React.Component {
     );
   }
 }
-
-RecipesPage.propTypes = {
-  recipes: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired
-};
-
-function mapStateToProps(state, ownProps){  
-  let categories = state.categories;
-
-  const recipesWithCategory = state.recipes.map(recipe => {
-    let category = categories.find(category => category.id == recipe.category_id);
-    if(category){
-      return Object.assign({}, recipe, {'categoryName': category.description, 'categoryIcon': category.iconUrl });
-    }
-    return recipe;
-  });
-
-  const categoriesFormattedForDropdown = categories.map(category => {
-    return {
-      value: category.id,
-      text: category.description,
-      iconUrl: category.iconUrl
-    };
-  });
-
-  return {
-    recipes: recipesWithCategory,
-    categories: categoriesFormattedForDropdown,
-    loading: state.ajaxCallsInProgress > 0
-  };
-}
-
-function mapDispatchToProps(dispatch){
-  return {
-    actions: bindActionCreators(recipeActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(RecipesPage);

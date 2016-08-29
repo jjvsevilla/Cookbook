@@ -24,12 +24,17 @@ const RecipeItem = ({recipe, confirmModalId, setDeleteRecipeId}) => {
         </div>
         <div className="card-action link-router">
           <div className="row link-router valign-wrapper">
-              <div className="col s6 valign center-align">
+              <div className="col s4 valign center-align">
                 <Link to={'/recipe/' + recipe.id}>
                   <i className="material-icons">mode_edit</i>
                 </Link>
               </div>
-              <div className="col s6 valign center-align">
+              <div className="col s4 valign center-align">
+                <Link to={'/recipe/' + recipe.id + '/comments'}>
+                  <i className="material-icons">comments</i>
+                </Link>
+              </div>
+              <div className="col s4 valign center-align">
                 <a className="modal-trigger" href={'#' + confirmModalId} onClick={setDeleteRecipeId.bind(this, recipe.id, recipe.recipeName, recipe.imageUrl)}>
                   <i className="material-icons">delete</i>
                 </a>

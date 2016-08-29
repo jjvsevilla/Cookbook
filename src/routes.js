@@ -7,6 +7,7 @@ import CoursesPage from './components/course/CoursesPage';
 import ManageCoursePage from './components/course/ManageCoursePage'; //eslint-disable-line
 import RecipesPage from './components/recipe/RecipesPage';
 import ManageRecipePage from './components/recipe/ManageRecipePage';
+import CommentRecipePage from './components/recipe/CommentRecipePage';
 import CategoriesPage from './components/category/CategoriesPage';
 
 export default (
@@ -19,6 +20,7 @@ export default (
     <Route path="recipes" component={RecipesPage} />
     <Route path="recipe" component={ManageRecipePage} />
     <Route path="recipe/:id" component={ManageRecipePage} />
+    <Route path="recipe/:id/comments" component={CommentRecipePage} />
     <Route path="categories" component={CategoriesPage} />
   </Route>
 );

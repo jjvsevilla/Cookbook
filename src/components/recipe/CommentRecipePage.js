@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as recipeActions from '../../actions/recipeActions';
-import RecipeForm from './RecipeForm';
+import CommentForm from './CommentForm';
 import toastr from 'toastr';
 import autobind from 'autobind-decorator';
 import request from 'superagent';
@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ManageRecipePage extends React.Component {
+export default class CommentRecipePage extends React.Component {
   
   static propTypes = {
     recipe: PropTypes.object.isRequired,
@@ -230,10 +230,11 @@ export default class ManageRecipePage extends React.Component {
   }
 
   render(){
+    debugger;
     const {recipe} = this.props;
     return (
       recipe &&
-      <RecipeForm
+      <CommentForm
         allCategories={this.props.categories}
         onChange={this.updateRecipeState}
         onSave={this.saveRecipe}
