@@ -26,17 +26,17 @@ export function deleteRecipeSuccess(recipe){
 
 export function loadRecipes() {
   return function(dispatch){
-    dispatch(beginAjaxCall()); 
+    dispatch(beginAjaxCall());
 
     superagent
       .get(`${apiConfig.apiHost}/recipe`)
-      .end(function(err, res){  
+      .end(function(err, res){
         if (err || !res.ok) {
           dispatch(ajaxCallError());
-          //throw(err);          
+          //throw(err);
         }else{
           dispatch(loadRecipesSuccess(res.body));
-        }        
+        }
       });
   };
 }
@@ -47,15 +47,15 @@ export function getRecipe(id) {
     return new Promise((resolve, reject) => (
       superagent
         .get(`${apiConfig.apiHost}/recipe/` + id)
-        .end(function(err, res){  
+        .end(function(err, res){
           if (err || !res.ok) {
             dispatch(ajaxCallError());
-            reject(err);        
+            reject(err);
           } else {
             let recipe = res.body;
             dispatch(getRecipesSuccess(recipe));
             resolve(recipe);
-          }        
+          }
         })
     ));
   };
@@ -71,32 +71,32 @@ export function saveRecipe(recipe) {
           .put(`${apiConfig.apiHost}/recipe/` + iniId)
           .set('Content-Type', 'application/json')
           .send(recipe)
-          .end(function(err, res){  
+          .end(function(err, res){
             if (err || !res.ok) {
               dispatch(ajaxCallError());
-              reject(err);        
+              reject(err);
             } else {
               let savedRecipe = res.body;
               dispatch(updateRecipeSuccess(savedRecipe));
               resolve(savedRecipe);
-            }      
-          })          
+            }
+          })
       ));
     } else {
-      return new Promise((resolve, reject) => (    
+      return new Promise((resolve, reject) => (
         superagent
           .post(`${apiConfig.apiHost}/recipe`)
           .set('Content-Type', 'application/json')
           .send(recipe)
-          .end(function(err, res){  
+          .end(function(err, res){
             if (err || !res.ok) {
               dispatch(ajaxCallError());
-              reject(err);        
+              reject(err);
             } else {
               let savedRecipe = res.body;
               dispatch(createRecipeSuccess(savedRecipe));
               resolve(savedRecipe);
-            }      
+            }
           })
       ));
     }
@@ -105,20 +105,20 @@ export function saveRecipe(recipe) {
 
 export function deleteRecipe(id) {
   return function (dispatch, getState) {
-    dispatch(beginAjaxCall());   
+    dispatch(beginAjaxCall());
     return new Promise((resolve, reject) => (
       superagent
         .del(`${apiConfig.apiHost}/recipe/` + id)
-        .end(function(err, res){  
+        .end(function(err, res){
           if (err || !res.ok) {
             dispatch(ajaxCallError());
-            reject(err);        
+            reject(err);
           } else {
             let deletedRecipeId = res.body;
             dispatch(deleteRecipeSuccess(deletedRecipeId));
             resolve(deletedRecipeId);
-          }      
-        })          
+          }
+        })
     ));
 
   };

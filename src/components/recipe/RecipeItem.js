@@ -32,7 +32,7 @@ const RecipeItem = ({recipe, confirmModalId, setDeleteRecipeId}) => {
               <div className="col s6 valign center-align">
                 <a className="modal-trigger" href={'#' + confirmModalId} onClick={setDeleteRecipeId.bind(this, recipe.id, recipe.recipeName, recipe.imageUrl)}>
                   <i className="material-icons">delete</i>
-                </a>     
+                </a>
               </div>
           </div>
         </div>
@@ -45,7 +45,7 @@ const RecipeItem = ({recipe, confirmModalId, setDeleteRecipeId}) => {
               <span className="card-title grey-text text-darken-4 fix"><i className="material-icons right">close</i></span>
             </div>
           </div>
-          <p>{recipe.preparation}</p>
+          <p>Chef: {recipe.chef}</p>
         </div>
       </div>
     </div>

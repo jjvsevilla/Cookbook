@@ -27,18 +27,18 @@ export class ManageRecipePage extends React.Component {
     // this.updateIngredient = this.updateIngredient.bind(this);
     // this.removeIngredient = this.removeIngredient.bind(this);
   }
-  
+
   getRecipe(id) {
     let _this = this;
     request
       .get(`${apiConfig.apiHost}/recipe/` + id)
-      .end(function(err, res){  
+      .end(function(err, res){
         if (err || !res.ok) {
           toastr.error(err);
-          _this.setState({saving: false});      
-        }else{  
+          _this.setState({saving: false});
+        }else{
           _this.setState({recipe: Object.assign({}, res.body)});
-        }        
+        }
       });
   }
 
@@ -58,8 +58,8 @@ export class ManageRecipePage extends React.Component {
         .catch(error => {
           toastr.error(error);
           this.setState({saving: false});
-        });   
-    }  
+        });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -67,7 +67,7 @@ export class ManageRecipePage extends React.Component {
 /*
       debugger;
       let recipeId = this.props.recipeId;
-      let recipe = this.getRecipe(recipeId);    
+      let recipe = this.getRecipe(recipeId);
       this.setState({recipe: Object.assign({}, nextProps.recipe)});
 */
     //}
@@ -103,13 +103,13 @@ export class ManageRecipePage extends React.Component {
     this.setState({saving: true});
 
     let recipe = this.state.recipe;
-    
+
     if(recipe.imageUrl === ""){
       recipe.imageUrl = "https://image.freepik.com/free-icon/covered-plate-of-food_318-61406.jpg";
     }
     if(recipe.publishdate === ""){
       recipe.publishdate = new Date().toISOString().split('T')[0];
-    }    
+    }
     if(recipe.rating === ""){
       recipe.rating = 1;
     }
@@ -207,11 +207,11 @@ function mapStateToProps(state, ownProps) {
   const recipeId = ownProps.params.id;
   let auxId = '';
 
-  let recipe = {id: '', category_id: '', recipeName: '', chef: '', preparation: '', rating: '', imageUrl: '', publishdate: '', ingredients: []};
+  let recipe = {id: '', category_id: '', recipeName: '', chef: '', preparation: '', rating: '', imageUrl: '', publishdate: '', ingredients: [], comments: []};
 
-  if (recipeId && recipeId.length>0){ 
+  if (recipeId && recipeId.length>0){
     auxId = recipeId;
-  }  
+  }
 
   const categoriesFormattedForDropdown = state.categories.map(category => {
     return {

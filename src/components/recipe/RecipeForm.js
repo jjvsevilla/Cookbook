@@ -10,6 +10,7 @@ import BackButton from '../common/BackButton';
 import SaveFormButton from '../common/SaveFormButton';
 import NavigatorPageLinks from '../common/NavigatorPageLinks';
 import IngredientList from './IngredientList';
+import CommentList from './CommentList';
 
 const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, addIngredient, updateIngredient, removeIngredient, goBack}) => {
   const pageTabs = [
@@ -18,6 +19,7 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, ad
     { "navID": "Chef", "navName": "Chef" },
     { "navID": "Ingredients", "navName": "Ingredients" },
     { "navID": "Preparation", "navName": "Preparation" },
+    //{ "navID": "Comments", "navName": "Comments"},
     { "navID": "SaveForm", "navName": "Save" }
   ];
 
@@ -76,6 +78,14 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, ad
             value={recipe.preparation}
             onChange={onChange}
             error={errors.preparation}/>
+        </div>
+        <div>
+        {recipe.comments && recipe.comments.length > 0 &&
+          <CommentList
+            NavId="Comments"
+            comments={recipe.comments}
+            name="comments"
+            label="Comments"/>}
         </div>
         <div className="row">
             <BackButton classes="waves-effect waves-light btn" goBack={goBack}/>

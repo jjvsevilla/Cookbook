@@ -13,17 +13,17 @@ const IngredientItem = ({ingredient, action, addIngredient, updateIngredient, re
 
   return (
     <li className="collection-item">
-      <div className="row">
-        <div className="input-field col s3">
-          {!isNew && <input type="text" name="amount" value={ingredient.amount} onChange={updateIngredient} />}
-        </div>
-        <div className="input-field col s7">
-          {!isNew && <input type="text" name="name" value={ingredient.name} onChange={updateIngredient} />}
-        </div>
-        <div className="input-field col s2 center-align">
-          {isNew && <a className={style} onClick={addIngredient}><i className="material-icons">{action}</i></a>}
-          {!isNew && <a className={style} onClick={removeIngredient}><i className="material-icons">{action}</i></a>}
-        </div>
+      <div className="valign-wrapper">
+          <div className="col s3 valign input-field">
+            {!isNew && <input type="text" name="amount" value={ingredient.amount} onChange={updateIngredient} />}
+          </div>
+          <div className="col s7 valign input-field">
+            {!isNew && <input type="text" name="name" value={ingredient.name} onChange={updateIngredient} />}
+          </div>
+          <div className="col s2 valign center-align">
+            {isNew && <a className={style} onClick={addIngredient}><i className="material-icons">{action}</i></a>}
+            {!isNew && <a className={style} onClick={removeIngredient}><i className="material-icons">{action}</i></a>}
+          </div>
       </div>
     </li>
   );

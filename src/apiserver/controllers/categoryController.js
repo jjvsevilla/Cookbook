@@ -1,6 +1,6 @@
 import knex from '../knex';
 
-export const getCategoryAll = async (req, res) => { 
+export const getCategoryAll = async (req, res) => {
   let db = knex;
   let query = await db.from('category')
                       .select()

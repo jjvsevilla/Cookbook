@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const ConfirmModal = ({controlId, header, content, confirmAction, confirmText, cancelText, objectName, objectImageUrl}) => (  
+const ConfirmModal = ({controlId, header, content, confirmAction, confirmText, cancelText, objectName, objectImageUrl}) => (
   <div id={controlId} className="modal">
     <div className="modal-content">
 
@@ -9,13 +9,15 @@ const ConfirmModal = ({controlId, header, content, confirmAction, confirmText, c
         <h4>{header}</h4>
         <p>{content}</p>
       </div>
-      <div className="col s10 offset-s2">
+      <div className="col s8 offset-s2">
         <p>
-          <b>{objectName}</b>        
+          <b>{objectName}</b>
         </p>
         <p>
           <img className="responsive-img modal-preview-img" src={objectImageUrl} title={objectName} />
         </p>
+      </div>
+      <div className="col s2">
       </div>
     </div>
     </div>

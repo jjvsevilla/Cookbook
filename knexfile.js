@@ -4,7 +4,7 @@ module.exports = {
     client: 'postgresql',
     connection: {
       host:     'localhost',
-      port:     '1433',
+      port:     '5432', // '1433',
       database: 'cookbook',
       user:     'postgres',
       password: 'Cookbook123'

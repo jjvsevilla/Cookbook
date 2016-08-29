@@ -12,7 +12,7 @@ export default function recipeReducer(state = initialState.recipes, action) {
       return state.filter((recipe) => { 
         return recipe.id === action.recipes.id; 
       });
-      //return action.recipes; // only 1      
+      //return action.recipes; // only 1
 */
     case types.CREATE_RECIPE_SUCCESS:
       return [
@@ -35,7 +35,7 @@ export default function recipeReducer(state = initialState.recipes, action) {
       return state.filter((recipe) => { 
         return recipe.id != recipeId; 
       });
-    }    
+    }
 
     default:
       return state;

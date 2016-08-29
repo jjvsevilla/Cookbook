@@ -18,6 +18,13 @@ const IngredientList = ({NavId, ingredients, name, label, addIngredient, updateI
       <div className="col s12">
         <label htmlFor={name} className="inputLabelFix active">{label}</label>
         <ul className="collection" name={name}>
+          <li className="collection-item">
+            <div className="valign-wrapper">
+                <b className="col s3 valign">Amount</b>
+                <b className="col s7 valign">Description</b>
+                <b className="col s2 valign"></b>
+            </div>
+          </li>
           {ingredients && ingredients.map((ingredient, index) =>
             <IngredientItem key={index} ingredient={ingredient} action="delete"
               addIngredient={addIngredient} updateIngredient={updateIngredient.bind(this, index)} removeIngredient={removeIngredient.bind(this, index)}/>

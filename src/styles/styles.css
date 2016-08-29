@@ -73,6 +73,10 @@ nav {
 }
 
 .modal .modal-content .modal-preview-img{
-  width: 350px !important;
+  width: 100% !important;
   height: 150px !important;
 }
+
+ #app .comments-row{
+   margin-bottom:0 !important;
+ }

@@ -9,8 +9,8 @@ const MaterializeTextInput = ({name, label, onChange, placeholder, value, error}
 */
   return (
     <div className="input-field col s12">
-      <input 
-        type="text" 
+      <input
+        type="text"
         name={name}
         value={value}
         onChange={onChange}

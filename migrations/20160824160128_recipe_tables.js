@@ -1,11 +1,11 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema   
+  return knex.schema
 
 	//<category>
   .createTable('category', function(tbl){
     //PK
-    tbl.increments();  
+    tbl.increments();
 		//UQ / Fields
     tbl.string('description', 50).notNullable().unique('uq_category_description');
     tbl.string('iconUrl', 250).notNullable().defaultTo('n/a');
@@ -15,9 +15,9 @@ exports.up = function(knex, Promise) {
 	.createTable('recipe', function(tbl)
 	{
 		//PK
-		tbl.increments();		
+		tbl.increments();
 		//FK
-		tbl.integer('category_id').notNullable().references('id').inTable('category');		
+		tbl.integer('category_id').notNullable().references('id').inTable('category');
 		//Fields
     tbl.string('recipeName', 100).notNullable().unique('uq_recipe_recipeName');
 		tbl.string('chef', 100).notNullable().defaultTo('');
@@ -38,11 +38,21 @@ exports.up = function(knex, Promise) {
     tbl.string('name', 100);
     tbl.string('amount', 50);
   })
+
+	//<comments>
+  .createTable('comment_recipe', function (tbl)
+  {
+    //PK
+    tbl.increments();
+    //Fields
+    tbl.integer('recipe_id').notNullable().references('id').inTable('recipe').onDelete('CASCADE');
+    tbl.text('comment', 999);
+  })
 };
 
-exports.down = function(knex, Promise) {	
+exports.down = function(knex, Promise) {
   return knex.schema
     .dropTable('ingredient_recipe')
     .dropTable('recipe')
-    .dropTable('category');  
+    .dropTable('category');
 };
