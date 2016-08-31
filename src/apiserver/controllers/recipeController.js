@@ -10,7 +10,7 @@ export const getRecipeAll = async (req, res) => {
                       .catch(function(err){
                         res.status(500).send(err);
                       });
-}
+};
 
 export const getIngredientsByRecipe = async (req, res) => {
   let query = await knex.from('ingredient_recipe as i')
@@ -22,7 +22,19 @@ export const getIngredientsByRecipe = async (req, res) => {
                     .catch(function(err){
                       res.status(500).send(err);
                     });
-}
+};
+
+export const getCommentsByRecipe = async (req, res) => {
+  let query = await knex.from('comment_recipe as i')
+                    .where('i.recipe_id', req.params.id)
+                    .select(knex.raw("i.id, i.comment"))
+                    .then(function(rows){
+                      res.json(rows);
+                    })
+                    .catch(function(err){
+                      res.status(500).send(err);
+                    });
+};
 
 export const getRecipe = async (req, res) => {
   let qrecipe = knex.from('recipe')
@@ -51,15 +63,13 @@ let qcomments = knex.from('comment_recipe as c')
                 .catch(function(err){
                   res.status(500).send(err);
                 });
-}
+};
 
 export const insertRecipe = async (req, res) => {
   //console.log("insertRecipe.Start");
   let reqData = req.body;
   let ingredients = reqData.ingredients;
-  let comments = reqData.comments;
   delete reqData.ingredients;
-  delete reqData.comments;
   delete reqData.id;
 
   return await knex.transaction(function (trx){
@@ -75,13 +85,7 @@ export const insertRecipe = async (req, res) => {
             .insert(arrIngredientsRecipe).into("ingredient_recipe")
             .then(function(){
               //console.log("insertRecipe.Start Detail Ingredients Success");
-              let arrCommentsRecipe = MixArrWithIdToInsert(comments, "recipe_id", reqData.id);
-              return trx
-                .insert(arrCommentsRecipe).into("comment_recipe")
-                .then(function(){
-                  //console.log("insertRecipe.Start Detail Comments Success");
-                })
-            })            
+            });      
         }
       })
       .then(function(){
@@ -92,17 +96,16 @@ export const insertRecipe = async (req, res) => {
     console.error("insertRecipe.Error " + err);
     res.status(500).send(err);
   });
-}
+};
 
 export const updateRecipe = async (req, res) => {
   //console.log("updateRecipe.Start");
   let reqData = req.body;
-  var id = reqData.id;
+  let id = reqData.id;
   let ingredients = reqData.ingredients;
-  let comments = reqData.comments;
-  delete reqData.ingredients;
   delete reqData.comments;
-  delete reqData.id;
+  delete reqData.ingredients;
+  delete reqData.id;  
 
   return await knex.transaction(function(trx){
     return trx("recipe").where('id', id)
@@ -119,27 +122,13 @@ export const updateRecipe = async (req, res) => {
                 return trx
                   .insert(arrIngredientsRecipe).into("ingredient_recipe")
                   .then(function(){                    
-                    //console.log("updateRecipe.Start Add New Ingredients Success");                                    
-                    return trx("comment_recipe").where('recipe_id', id)
-                    .del()
-                    .then(function(){
-                      //console.log("updateRecipe.Start Remove Old Comments Success"); 
-                      if(comments.length)
-                      {
-                        let arrCommentsRecipe = MixArrWithIdToInsertUpdate(comments, "id", "recipe_id", id);
-                        return trx
-                          .insert(arrCommentsRecipe).into("comment_recipe")
-                          .then(function(){
-                            //console.log("updateRecipe.Start Add New Comments Success");
-                          })
-                      }
-                    })
+                    //console.log("updateRecipe.Start Add New Ingredients Success");   
                   })
                   .then(function(){
                     //console.log("updateRecipe.Start Add New Ingredients Success");
-                  })
+                  });
               }
-          })
+          });
       })
       .then(function(){
         //console.log("updateRecipe.Complete " + id);
@@ -151,11 +140,11 @@ export const updateRecipe = async (req, res) => {
         res.status(500).send(err);
       });
   });
-}
+};
 
 export const deleteRecipe = async (req, res) => {
   //console.log("deleteRecipe.Start");
-  var id = req.params.id;
+  let id = req.params.id;
   return await knex.transaction(function (trx)
   {
     return trx("recipe").where('id', id)
@@ -168,4 +157,27 @@ export const deleteRecipe = async (req, res) => {
     //console.error("deleteRecipe.Error " + err);
     res.status(500).send(err);
   });
-}
+};
+
+export const insertCommentByRecipe = async (req, res) => {
+  //console.log("insertCommentByRecipe.Start");
+  let id = req.params.id;
+  let reqData = req.body;
+  reqData.recipe_id = id;
+  delete reqData.id;
+  return await knex.transaction(function (trx){    
+    return trx
+      .insert(reqData, 'id').into("comment_recipe")
+      .then(function (ids){
+        reqData.id = ids[0];
+        //console.log("insertCommentByRecipe.Start Detail Comments Success");
+      })
+      .then(function(){
+        //console.log("insertCommentByRecipe.Complete");
+        return res.json(reqData);
+      });
+  }).catch(function(err){
+    //console.error("insertCommentByRecipe.Error " + err);
+    res.status(500).send(err);
+  });
+};

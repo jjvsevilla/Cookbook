@@ -24,6 +24,14 @@ export function deleteRecipeSuccess(recipe){
   return {type: types.DELETE_RECIPE_SUCCESS, recipe};
 }
 
+export function getRecipeCommentsSuccess(recipes){
+  return {type: types.GET_RECIPE_COMMENTS_SUCCESS, recipes};
+}
+
+export function createRecipeCommentSuccess(recipe){
+  return {type: types.CREATE_RECIPE_COMMENT_SUCCESS, recipe};
+}
+
 export function loadRecipes() {
   return function(dispatch){
     dispatch(beginAjaxCall());
@@ -128,6 +136,28 @@ export function deleteRecipe(id) {
           }
         })
     ));
+  };
+}
 
+export function saveRecipeComment(recipe) {
+  return function (dispatch, getState) {
+    dispatch(beginAjaxCall());
+    let iniId=recipe.recipe_id;
+    return new Promise((resolve, reject) => (
+      superagent
+        .post(`${apiConfig.apiHost}/recipe/${iniId}/comments`)
+        .set('Content-Type', 'application/json')
+        .send(recipe)
+        .end(function(err, res){
+          if (err || !res.ok) {  
+            dispatch(ajaxCallError());
+            reject(err);
+          } else {
+            let savedRecipe = res.body;
+            dispatch(createRecipeCommentSuccess(savedRecipe));
+            resolve(savedRecipe);
+          }
+        })
+    ));
   };
 }

@@ -11,41 +11,30 @@ import materializecss from 'materialize-css';
 
 const mapStateToProps = (state, ownProps) => {
   const recipeId = ownProps.params.id;
-  let auxId = '';
-
-  let recipe = {id: '', category_id: '', recipeName: '', chef: '', preparation: '', rating: '', imageUrl: '', publishdate: '', ingredients: [], comments: []};
+  let auxId = '';  
+  let recipe = {id: '', recipeName: '', rating: '', imageUrl: '', publishdate: '', comments: []};
 
   if (recipeId && recipeId.length>0){
     auxId = recipeId;
   }
 
-  const categoriesFormattedForDropdown = state.categories.map(category => {
-    return {
-      value: category.id,
-      text: category.description,
-      iconUrl: category.iconUrl
-    };
-  });
-
   return {
     recipeId: auxId,
-    recipe: recipe,
-    categories: categoriesFormattedForDropdown
+    recipe: recipe
   };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators(recipeActions, dispatch)
   };
-}
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class CommentRecipePage extends React.Component {
   
   static propTypes = {
     recipe: PropTypes.object.isRequired,
-    categories: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
   };
 
@@ -62,7 +51,7 @@ export default class CommentRecipePage extends React.Component {
       saving: false,
       lastComment: {
         "comment":""
-      },
+      }
     };
   }
 
@@ -70,12 +59,11 @@ export default class CommentRecipePage extends React.Component {
     $('.toc-wrapper').pushpin({ top: 64 });
     $('.scrollspy').scrollSpy();
     $('textarea').trigger('autoresize');
-    $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'category_id', "select[name='categoryId']"));
 
     let recipeId = this.props.recipeId;
     if (recipeId && recipeId.length>0){
       this.props.actions.getRecipe(recipeId)
-        .then((result) => {
+        .then(result => {
           this.setState({recipe: Object.assign({}, result)});
         })
         .catch(error => {
@@ -85,129 +73,45 @@ export default class CommentRecipePage extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    //if (this.props.recipeId != nextProps.recipeId) {
-/*
-      debugger;
-      let recipeId = this.props.recipeId;
-      let recipe = this.getRecipe(recipeId);
-      this.setState({recipe: Object.assign({}, nextProps.recipe)});
-*/
-    //}
-  }
-
   componentDidUpdate(){
     $('.toc-wrapper').pushpin({ top: 64 });
     $('.scrollspy').scrollSpy();
     $('textarea').trigger('autoresize');
     Materialize.updateTextFields();
-    $("select[name='categoryId']").material_select(this.updateRecipeState.bind(this, undefined, 'category_id', "select[name='categoryId']"));
   }
 
-  validateSave(recipe){
-    if(recipe.recipeName.length===0){
-      return "The Recipe Name field is required.";
-    } else if (recipe.category_id.length===0){
-      return "The category field is required.";
-    } else if (recipe.chef.length===0){
-      return "The Chef field is required.";
-    } else if (recipe.ingredients.length===0){
-      return "Ingredients are required. You must add at least one.";
-    } else if (recipe.preparation.length===0){
-      return "The Preparation field is required.";
+  validateSave(comment){  
+    if(comment.comment.length===0){
+      return "Comment cannot be empty!.";
     } else {
       return "";
     }
   }
 
   @autobind
-  updateRecipeState(event, field, selector) {
-    let _value = "";
-    let _field = "";
-    if(event){
-        _value = event.target.value;
-        _field = event.target.name;
-    } else {
-      _field = field;
-      _value = $(selector).val();
-    }
-    let recipe = this.state.recipe;
-    recipe[_field] = _value;
-    return this.setState({recipe: recipe});
-  }
-
-  @autobind
-  saveRecipe(event) {
+  addComment(){
     event.preventDefault();
     this.setState({saving: true});
-
-    let recipe = this.state.recipe;  
-    let valErrorMessage = this.validateSave(recipe);    
+    let comment = Object.assign({}, this.state.lastComment, { recipe_id: this.state.recipe.id });
+    let valErrorMessage = this.validateSave(comment);    
     if(valErrorMessage.length>0){
       toastr.error(valErrorMessage);
       this.setState({saving: false});
       return;
     }
-    
-    if(recipe.imageUrl === ""){
-      recipe.imageUrl = "https://image.freepik.com/free-icon/covered-plate-of-food_318-61406.jpg";
-    }
-    if(recipe.publishdate === ""){
-      recipe.publishdate = new Date().toISOString().split('T')[0];
-    }
-    if(recipe.rating === ""){
-      recipe.rating = 1;
-    }
-
-    this.setState({recipe: recipe});
-
-    this.props.actions.saveRecipe(this.state.recipe)
-      .then(() => this.redirect())
+    this.props.actions.saveRecipeComment(comment)
+      .then(result => {
+        let recipe = Object.assign({}, this.state.recipe);
+        recipe.comments = [...recipe.comments, Object.assign({}, { "id": result.id }, { "comment": result.comment })];
+        this.setState({recipe: recipe});
+        this.setState({lastComment: Object.assign({}, {})});
+        this.setState({saving: false});
+        toastr.success('Comment saved');
+      })
       .catch(error => {
         toastr.error(error.message);
         this.setState({saving: false});
       });
-  }
-
-  @autobind
-  addIngredient(){
-    let recipe = Object.assign({}, this.state.recipe);
-    const newIngredient = {"name": "", "amount": ""};
-    recipe.ingredients = [...recipe.ingredients, newIngredient];
-    return this.setState({recipe: recipe});
-  }
-
-  @autobind
-  updateIngredient(index, event){
-    const field = event.target.name;
-    let recipe = Object.assign({}, this.state.recipe);
-    let ingredient = Object.assign({}, recipe.ingredients[index]);
-    ingredient[field] = event.target.value;
-
-    recipe.ingredients = recipe.ingredients.map((ingre, idx) => {
-      if (idx === index) {
-        return Object.assign({}, ingredient);
-      }
-      return ingre;
-    });
-
-    return this.setState({recipe: recipe});
-  }
-
-  @autobind
-  removeIngredient(index){
-    let recipe = Object.assign({}, this.state.recipe);
-    recipe.ingredients = recipe.ingredients.filter((_, i) => i !== index);
-    return this.setState({recipe: recipe});
-  }
-
-  @autobind
-  addComment(){
-    let recipe = Object.assign({}, this.state.recipe);
-    let comment = Object.assign({}, this.state.lastComment);
-    recipe.comments = [...recipe.comments, comment];
-    this.setState({lastComment: Object.assign({}, {})});
-    return this.setState({recipe: recipe});
   }
 
   @autobind
@@ -218,34 +122,21 @@ export default class CommentRecipePage extends React.Component {
     return this.setState({lastComment: comment});
   }
 
-  redirect() {
-    this.setState({saving: false});
-    toastr.success('Recipe saved');
-    this.context.router.push('/recipes');
-  }
-
   @autobind
   goBack() {
     this.context.router.push('/recipes');
   }
 
   render(){
-    debugger;
     const {recipe} = this.props;
     return (
       recipe &&
       <CommentForm
-        allCategories={this.props.categories}
-        onChange={this.updateRecipeState}
-        onSave={this.saveRecipe}
+        onChange={this.updateComment}
+        onSave={this.addComment}
         recipe={this.state.recipe}
         errors={this.state.errors}
-        saving={this.state.saving}
-        addIngredient={this.addIngredient}
-        updateIngredient={this.updateIngredient}
-        removeIngredient={this.removeIngredient}
-        addComment={this.addComment}
-        updateComment={this.updateComment}
+        saving={this.state.saving}        
         goBack={this.goBack}
       />
     );

@@ -65,3 +65,11 @@ knex seed:run
                 <a  href="javascript:void(0)" onClick={deleteRecipe.bind(this, recipe.id)}>
                   <i className="material-icons">delete</i>
                 </a>
+
+
+
+              <a className={style} onClick={addComment}><i className="material-icons">{action}</i></a>              
+            <li key={index}><a href={'#' + pageTab.navID}>{pageTab.navName}</a></li> 
+             
+import {NavigatorPageLinkItem} from './NavigatorPageLinkItem'
+          <NavigatorPageLinkItem key={index} pageTab={pageTab} />    

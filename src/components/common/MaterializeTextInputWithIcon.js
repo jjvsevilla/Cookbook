@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const MaterializeTextInputWithIcon = ({NavId, name, label, onChange, placeholder, value, error, iconName}) => {
+const MaterializeTextInputWithIcon = ({NavId, name, label, onChange, placeholder, value, error, iconName, isReadonly}) => {
   /*
   let wrapperClass = 'form-group';
   if (error && error.length > 0) {
@@ -16,7 +16,8 @@ const MaterializeTextInputWithIcon = ({NavId, name, label, onChange, placeholder
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="validate"/>
+        className="validate"
+        disabled={isReadonly}/>
       <label htmlFor={name} className="active inputLabelFix">{label}</label>
       {error && <div className="left-alert">{error}</div>}
     </div>

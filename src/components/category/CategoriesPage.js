@@ -7,13 +7,13 @@ const mapStateToProps = (state, ownProps) => {
   return {
     categories: state.categories
   };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators(categoryActions, dispatch)
   };
-}
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class CategoriesPage extends React.Component {

@@ -10,20 +10,19 @@ import BackButton from '../common/BackButton';
 import SaveFormButton from '../common/SaveFormButton';
 import NavigatorPageLinks from '../common/NavigatorPageLinks';
 import IngredientList from './IngredientList';
-import CommentList from './CommentList';
 
 const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors, 
-                     addIngredient, updateIngredient, removeIngredient, 
-                     addComment, updateComment, goBack}) => {
+                     addIngredient, updateIngredient, removeIngredient, goBack}) => {
+                    
   const pageTabs = [
     { "navID": "RecipeName", "navName": "Recipe Name" },
     { "navID": "Category", "navName": "Category" },
     { "navID": "Chef", "navName": "Chef" },
     { "navID": "Ingredients", "navName": "Ingredients" },
     { "navID": "Preparation", "navName": "Preparation" },
-    { "navID": "Comments", "navName": "Comments"},
     { "navID": "SaveForm", "navName": "Save" }
-  ];
+    //{ "navID": "GoToComments", "navName": "Go to Comments", "link": (recipe.id ? "/recipe/" + recipe.id : "")}
+  ]; 
 
   return (
     recipe &&
@@ -81,16 +80,6 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors,
             onChange={onChange}
             error={errors.preparation}/>
         </div>
-        <div>
-        {recipe.comments &&
-          <CommentList
-            NavId="Comments"
-            comments={recipe.comments}
-            name="comments"
-            label="Comments"
-            addComment={addComment}
-            updateComment={updateComment}/>}
-        </div>
         <div className="row">
             <BackButton classes="waves-effect waves-light btn" goBack={goBack}/>
             &nbsp;
@@ -114,8 +103,6 @@ RecipeForm.propTypes = {
   addIngredient: React.PropTypes.func.isRequired,
   updateIngredient: React.PropTypes.func.isRequired,
   removeIngredient: React.PropTypes.func.isRequired,
-  addComment: React.PropTypes.func.isRequired,
-  updateComment: React.PropTypes.func.isRequired,
   goBack: React.PropTypes.func.isRequired
 };
 

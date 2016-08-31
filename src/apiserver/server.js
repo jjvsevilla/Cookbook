@@ -6,7 +6,7 @@ import Router from './routes';
 import serverConfig from './serverConfig';
 
 const app = express();
-app.use(timeout('3s'))
+app.use(timeout('3s'));
 const port = serverConfig.port;
 
 const apiRoutes = Router();

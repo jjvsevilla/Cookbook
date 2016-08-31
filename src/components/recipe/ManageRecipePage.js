@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
   const recipeId = ownProps.params.id;
   let auxId = '';
 
-  let recipe = {id: '', category_id: '', recipeName: '', chef: '', preparation: '', rating: '', imageUrl: '', publishdate: '', ingredients: [], comments: []};
+  let recipe = {id: '', category_id: '', recipeName: '', chef: '', preparation: '', rating: '', imageUrl: '', publishdate: '', ingredients: []};
 
   if (recipeId && recipeId.length>0){
     auxId = recipeId;
@@ -32,13 +32,13 @@ const mapStateToProps = (state, ownProps) => {
     recipe: recipe,
     categories: categoriesFormattedForDropdown
   };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators(recipeActions, dispatch)
   };
-}
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ManageRecipePage extends React.Component {
@@ -62,7 +62,7 @@ export default class ManageRecipePage extends React.Component {
       saving: false,
       lastComment: {
         "comment":""
-      },
+      }
     };
   }
 
@@ -83,17 +83,6 @@ export default class ManageRecipePage extends React.Component {
           this.setState({saving: false});
         });
     }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    //if (this.props.recipeId != nextProps.recipeId) {
-/*
-      debugger;
-      let recipeId = this.props.recipeId;
-      let recipe = this.getRecipe(recipeId);
-      this.setState({recipe: Object.assign({}, nextProps.recipe)});
-*/
-    //}
   }
 
   componentDidUpdate(){
@@ -201,23 +190,6 @@ export default class ManageRecipePage extends React.Component {
     return this.setState({recipe: recipe});
   }
 
-  @autobind
-  addComment(){
-    let recipe = Object.assign({}, this.state.recipe);
-    let comment = Object.assign({}, this.state.lastComment);
-    recipe.comments = [...recipe.comments, comment];
-    this.setState({lastComment: Object.assign({}, {})});
-    return this.setState({recipe: recipe});
-  }
-
-  @autobind
-  updateComment(index, event){
-    const field = event.target.name;
-    let comment = Object.assign({}, this.state.lastComment);
-    comment[field] = event.target.value;
-    return this.setState({lastComment: comment});
-  }
-
   redirect() {
     this.setState({saving: false});
     toastr.success('Recipe saved');
@@ -243,8 +215,6 @@ export default class ManageRecipePage extends React.Component {
         addIngredient={this.addIngredient}
         updateIngredient={this.updateIngredient}
         removeIngredient={this.removeIngredient}
-        addComment={this.addComment}
-        updateComment={this.updateComment}
         goBack={this.goBack}
       />
     );

@@ -21,5 +21,9 @@ export default function Router(){
   router.route('/recipe/:id/ingredients')
         .get(recipeController.getIngredientsByRecipe);
 
+  router.route('/recipe/:id/comments')
+        .get(recipeController.getCommentsByRecipe)
+        .post(recipeController.insertCommentByRecipe);
+
   return router;
 }

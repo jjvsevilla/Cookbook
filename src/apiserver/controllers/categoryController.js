@@ -9,5 +9,4 @@ export const getCategoryAll = async (req, res) => {
                       .catch(function(err){
                         res.status(500).send(err);
                       });
-
-}
+};

@@ -35,13 +35,13 @@ const mapStateToProps = (state, ownProps) => {
     categories: categoriesFormattedForDropdown,
     loading: state.ajaxCallsInProgress > 0
   };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators(recipeActions, dispatch)
   };
-}
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class RecipesPage extends React.Component {

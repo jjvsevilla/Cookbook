@@ -37,6 +37,18 @@ export default function recipeReducer(state = initialState.recipes, action) {
       });
     }
 
+    case types.CREATE_RECIPE_COMMENT_SUCCESS:
+      return state;
+/*
+      debugger;
+      let recipe = state;
+      recipe.comments = [
+                ...recipe,
+                Object.assign({}, action.comment)
+            ];
+      return Object.assign({}, recipe);
+*/
+
     default:
       return state;
   }
