@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import CommentItem from './CommentItem';
 
-const CommentList = ({NavId, comments, name, label, addComment, updateComment, saving}) => {
+const CommentList = ({NavId, comments, name, label, addComment, updateComment, updateRating, saving}) => {
   let addNewComment, newComment;
   let newIndex=0;
 
@@ -15,6 +15,7 @@ const CommentList = ({NavId, comments, name, label, addComment, updateComment, s
       action="add"
       addComment={addComment} 
       updateComment={updateComment.bind(this, newIndex)} 
+      updateRating={updateRating} 
       saving={saving}/>
   );
 
@@ -23,6 +24,7 @@ const CommentList = ({NavId, comments, name, label, addComment, updateComment, s
       <div className="col s12">
         <label htmlFor={name} className="inputLabelFix active">{label}</label>
         <ul className="collection" name={name}>
+          {addNewComment}   
           {comments && comments.map((com, index) =>
           <CommentItem 
             key={index} 
@@ -32,8 +34,7 @@ const CommentList = ({NavId, comments, name, label, addComment, updateComment, s
             addComment={addComment} 
             updateComment={updateComment.bind(this, index)} 
             saving={saving}/>
-          )}
-          {addNewComment}          
+          )}       
         </ul>
       </div>
     </div>
@@ -45,9 +46,10 @@ CommentList.propTypes = {
   comments: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  addComment: React.PropTypes.func.isRequired,
-  updateComment: React.PropTypes.func.isRequired,
-  saving: React.PropTypes.bool
+  addComment: PropTypes.func.isRequired,
+  updateComment: PropTypes.func.isRequired,
+  updateRating: PropTypes.func.isRequired,
+  saving: PropTypes.bool
 };
 
 export default CommentList;

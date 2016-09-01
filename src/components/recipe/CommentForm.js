@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import TextInput from '../common/TextInput';
 import SelectInput from '../common/SelectInput';
 
@@ -11,7 +11,7 @@ import NavigatorPageLinks from '../common/NavigatorPageLinks';
 import CommentList from './CommentList';
 import LabelTitle from '../common/LabelTitle';
 
-const CommentForm = ({recipe, onSave, onChange, saving, errors, goBack}) => {    
+const CommentForm = ({recipe, onSave, updateRating, onChange, saving, errors, goBack}) => {    
   const pageTabs = [
     { "navID": "RecipeName", "navName": "Recipe Name" },
     { "navID": "Comments", "navName": "Comments"},
@@ -33,7 +33,8 @@ const CommentForm = ({recipe, onSave, onChange, saving, errors, goBack}) => {
             name="comments"
             label="Comments"
             addComment={onSave}
-            updateComment={onChange} 
+            updateComment={onChange}
+            updateRating={updateRating} 
             saving={saving}/>}
         </div>
         <div className="row">
@@ -48,12 +49,13 @@ const CommentForm = ({recipe, onSave, onChange, saving, errors, goBack}) => {
 };
 
 CommentForm.propTypes = {
-  recipe: React.PropTypes.object.isRequired,
-  onSave: React.PropTypes.func.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  saving: React.PropTypes.bool,
-  errors: React.PropTypes.object, 
-  goBack: React.PropTypes.func.isRequired
+  recipe: PropTypes.object.isRequired,
+  onSave: PropTypes.func.isRequired,
+  updateRating: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  saving: PropTypes.bool,
+  errors: PropTypes.object, 
+  goBack: PropTypes.func.isRequired
 };
 
 export default CommentForm;

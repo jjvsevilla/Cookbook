@@ -123,6 +123,14 @@ export default class CommentRecipePage extends React.Component {
   }
 
   @autobind
+  updateRating(index){
+    debugger;
+    console.log("updateRating");
+
+    console.log(index);
+  }
+
+  @autobind
   goBack() {
     this.context.router.push('/recipes');
   }
@@ -132,6 +140,7 @@ export default class CommentRecipePage extends React.Component {
     return (
       recipe &&
       <CommentForm
+        updateRating={this.updateRating}
         onChange={this.updateComment}
         onSave={this.addComment}
         recipe={this.state.recipe}

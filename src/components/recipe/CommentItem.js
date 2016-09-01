@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react';
 import SaveLinkButton from '../common/SaveLinkButton';
+import StarRating from '../common/StarRating';
 
-const CommentItem = ({comment, auxIndex, action, addComment, updateComment, saving}) => {  
+const CommentItem = ({comment, auxIndex, action, addComment, updateComment, saving, updateRating}) => {  
   let color="";
   let style="btn-floating btn-large waves-effect waves-light ";
   let isNew=true;
@@ -12,9 +13,20 @@ const CommentItem = ({comment, auxIndex, action, addComment, updateComment, savi
     isNew=false;
   }  
   style+=color;
-  
+    
+  let starRatingName = `${auxIndex}_rating`;
+  let rating = 3;
+  //console.log(starRatingName);
+
   return (
     <li className="collection-item">
+      <div className="row">
+        <h4>rating!</h4>
+        <StarRating 
+          name={starRatingName}
+          rating={rating} 
+          updateRating={updateRating} />
+      </div>
       <div className="row">
         <div className="valign-wrapper">
           <div className="col s1 valign right-align">            
